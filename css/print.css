@@ -1,0 +1,28 @@
+@page {
+	size: A4;
+	margin: 25cm;
+}
+
+html {
+	font-family: 'Inter';
+}
+
+h1,
+h2,
+h3,
+h4 {
+	page-break-after: avoid;
+}
+
+p {
+	font-size: 12pt;
+	text-align: justify;
+}
+
+blockquote {
+	text-align: start;
+}
+
+input[type="checkbox"] {
+	display: inline-block;
+}
