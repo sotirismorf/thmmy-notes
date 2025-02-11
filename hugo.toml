@@ -1,0 +1,13 @@
+baseURL = "https://sotirismorf.github.io/thmmy-notes/"
+languageCode = 'el'
+title = 'THMMY notes - sotirismorf'
+
+[markup]
+ [markup.goldmark]
+    [markup.goldmark.extensions]
+      [markup.goldmark.extensions.passthrough]
+        enable = true
+        [markup.goldmark.extensions.passthrough.delimiters]
+          block = [['$$', '$$']]
+          inline = [['$', '$']]
+
