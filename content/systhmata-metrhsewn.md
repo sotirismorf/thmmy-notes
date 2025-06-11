@@ -1,10 +1,11 @@
 ---
 title: Συστήματα Μετρήσεων - Συλλογή παλιών θεμάτων
 ---
-> Αυτό το αρχείο φτιάχτηκε με βάση άλλα αρχεία που είναι διαθέσιμα στο thmmy.
+> Αυτό το αρχείο δημιουργήθηκε με βάση άλλα αρχεία που είναι διαθέσιμα στο
+> [thmmy.gr](https://www.thmmy.gr).
 > Για διορθώσεις σφαλμάτων και βελτιώσεις άνοιξε issue στο
 > [github.com/sotirismorf/thmmy-notes](https://github.com/sotirismorf/thmmy-notes).
-> Η μετατροπή σε Markdown έγινε χρησιμοποιώντας το Deepseek R1.
+> Η μετατροπή σε Markdown έγινε χρησιμοποιώντας LLMs.
 > Μπορείς να βρεις το υλικό σε μορφή ιστοσελίδας στο
 > [sotirismorf.github.io/thmmy-notes/](https://sotirismorf.github.io/thmmy-notes/)
 
