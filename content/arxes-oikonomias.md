@@ -399,3 +399,27 @@ $$\Pi_1 = Pq_1 - C_1 = 3.55 = \Pi_2 $$
 **Α)** Ποιος είναι ο άριστος συνδυασμός κεφαλαίου και εργασίας που ελαχιστοποιεί το κόστος παραγωγής 48 μονάδων;
 
 **Β)** Ποιο είναι το οριακό κόστος όταν η επιχείρηση παράγει 48 μονάδες;
+
+**Λύση**
+
+Ασχηση: (παρόμοια με ασχηση 5 σελίδα 218 του βιβλίου)
+
+$$ L_{min} = P_k \cdot K + P_L \cdot L + \lambda (\overline{Q} - F(K, L)) $$
+
+$$ \frac{\partial L_{min}}{\partial L} = P_L - \lambda F_L = 0 \tag{1} $$
+
+$$ \frac{\partial L_{min}}{\partial K} = P_K - \lambda F_K = 0 \tag{2} $$
+
+$$ \frac{\partial L_{min}}{\partial \lambda} = \overline{Q} - F(K, L) = 0 \tag{3} $$
+
+άρα απο τις (1) και (2)
+
+$$ \frac{P_L}{P_K} = \frac{F_L}{F_K} \Rightarrow \frac{12}{6} = \frac{L^{-3/4} \cdot K^{3/4}}{3L^{1/4} \cdot K^{-1/4}} \Rightarrow K = 6L \tag{4} $$
+
+και απο την (3)
+
+$$ \overline{Q} = F(K, L) \Rightarrow 4L^{1/4}K^{3/4} = 48 \tag{5} $$
+
+λύνοντας τις (4) και (5) βρίσκουμε
+
+$$ K = 18.781 \quad L = 3.13 \quad \lambda = MC = 0.319 $$
