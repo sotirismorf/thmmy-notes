@@ -2,10 +2,33 @@
 <main>
   <h1>{{ .Site.Title }}</h1>
   {{ .Content }}
-  <ul class="page-list">
-    {{ range .Site.RegularPages.ByTitle }}
-    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
-    {{ end }}
-  </ul>
+
+  {{ $all := .Site.RegularPages }}
+  {{ $withSemester := where $all "Params.semester" "ne" "" }}
+  {{ $withoutSemester := where $all "Params.semester" "" }}
+
+  {{ range $withSemester.GroupByParam "semester" }}
+  <div class="semester-group">
+    <p class="semester-label">{{ .Key }}ο Εξάμηνο</p>
+    <ul class="page-list">
+      {{ range .Pages.ByTitle }}
+      <li>
+        <a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ with .Params.category }}<span class="category-chip">{{ . }}</span>{{ end }}
+      </li>
+      {{ end }}
+    </ul>
+  </div>
+  {{ end }}
+
+  {{ if $withoutSemester }}
+  <div class="semester-group">
+    <p class="semester-label">Άλλα</p>
+    <ul class="page-list">
+      {{ range $withoutSemester.ByTitle }}
+      <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+      {{ end }}
+    </ul>
+  </div>
+  {{ end }}
 </main>
 {{ end }}

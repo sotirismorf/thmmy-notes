@@ -4,6 +4,13 @@
     <nav class="breadcrumb"><a href="{{ .Site.Home.RelPermalink }}">← Αρχική</a></nav>
     <header class="article-header">
       <h1>{{ .Title }}</h1>
+      {{ if or .Params.semester .Params.category }}
+      <p class="course-meta">
+        {{- with .Params.semester -}}{{ . }}ο Εξάμηνο{{- end -}}
+        {{- if and .Params.semester .Params.category }} · {{ end -}}
+        {{- with .Params.category -}}{{ . }}{{- end -}}
+      </p>
+      {{ end }}
       {{ with .Params.Subtitle }}<p class="article-meta">{{ . }}</p>{{ end }}
       {{ with .Params.Author }}<p class="article-meta author">{{ . }}</p>{{ end }}
     </header>

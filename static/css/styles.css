@@ -237,6 +237,36 @@ ul:hover input[type="checkbox"]:checked { display: inline-block; }
 
 #TableOfContents a.active { font-weight: 500; }
 
+/* Course metadata on single page */
+
+.course-meta {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  margin: 0.15rem 0 0;
+}
+
+/* Homepage semester groups */
+
+.semester-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin: 1.5rem 0 0.4rem;
+}
+
+.category-chip {
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 0.15em 0.55em;
+  border-radius: 999px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  white-space: nowrap;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+}
+
 /* Homepage */
 
 .page-list {
