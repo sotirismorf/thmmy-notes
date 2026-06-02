@@ -1,15 +1,11 @@
 {{ define "main" }}
-<main aria-role="main">
-	<header>
-		<h1>{{.Title}}</h1>
-	</header>
-	{{.Content}}
-	<ul>
-{{ range .Site.RegularPages }}
-<li>
-<a href="{{ .RelPermalink }}">{{ .Title }}</a>
-</li>
-{{ end }}
-<ul/>
+<main>
+  <h1>{{ .Site.Title }}</h1>
+  {{ .Content }}
+  <ul class="page-list">
+    {{ range .Site.RegularPages.ByTitle }}
+    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+    {{ end }}
+  </ul>
 </main>
 {{ end }}

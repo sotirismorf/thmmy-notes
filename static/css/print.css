@@ -1,28 +1,27 @@
 @page {
-	size: A4;
-	margin: 25cm;
+  size: A4;
+  margin: 2.5cm;
 }
 
 html {
-	font-family: 'Inter';
+  font-size: 11pt;
 }
 
-h1,
-h2,
-h3,
-h4 {
-	page-break-after: avoid;
+body {
+  padding: 0;
 }
+
+nav { display: none; }
+
+h1, h2, h3, h4 { page-break-after: avoid; }
 
 p {
-	font-size: 12pt;
-	text-align: justify;
+  font-size: 11pt;
+  text-align: justify;
 }
 
-blockquote {
-	text-align: start;
-}
+blockquote { text-align: start; }
 
-input[type="checkbox"] {
-	display: inline-block;
-}
+input[type="checkbox"] { display: inline-block; }
+
+pre, table { page-break-inside: avoid; }

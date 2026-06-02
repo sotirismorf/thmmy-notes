@@ -1,9 +1,12 @@
 {{ define "main" }}
-	<article>
-	<h1>{{ .Title }}</h1>
-	<p class="subtitle">{{ .Params.Subtitle }}</p>
-	<p class="author">{{ .Params.Author }}</p>
-	<hr>
-	{{ .Content }}
-	</article>
+<article>
+  <nav><a href="{{ .Site.Home.RelPermalink }}">← Αρχική</a></nav>
+  <header class="article-header">
+    <h1>{{ .Title }}</h1>
+    {{ with .Params.Subtitle }}<p class="article-meta">{{ . }}</p>{{ end }}
+    {{ with .Params.Author }}<p class="article-meta author">{{ . }}</p>{{ end }}
+  </header>
+  <hr>
+  {{ .Content }}
+</article>
 {{ end }}
