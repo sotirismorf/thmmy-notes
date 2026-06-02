@@ -60,6 +60,7 @@ h1 { font-size: 1.75rem; line-height: 1.25; margin: 0 0 0.25rem; }
 h2 { font-size: 1.3rem;  margin-top: 2.25rem; padding-bottom: 0.3rem; border-bottom: 1px solid var(--border); }
 h3 { font-size: 1.05rem; margin-top: 1.75rem; }
 h4 { font-size: 1rem;    margin-top: 1.5rem; }
+h5 { font-size: 0.95rem; margin-top: 1.25rem; color: var(--text-muted); }
 
 p { margin: 0.75rem 0; }
 
@@ -111,6 +112,26 @@ pre code {
   border: none;
   padding: 0;
   font-size: 0.875rem;
+}
+
+/* Exercise tags */
+
+.exercise-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0.3rem 0 1.1rem;
+}
+
+.tag {
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.2em 0.65em;
+  border-radius: 999px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  white-space: nowrap;
 }
 
 /* Tables */
