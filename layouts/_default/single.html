@@ -1,12 +1,20 @@
 {{ define "main" }}
-<article>
-  <nav><a href="{{ .Site.Home.RelPermalink }}">← Αρχική</a></nav>
-  <header class="article-header">
-    <h1>{{ .Title }}</h1>
-    {{ with .Params.Subtitle }}<p class="article-meta">{{ . }}</p>{{ end }}
-    {{ with .Params.Author }}<p class="article-meta author">{{ . }}</p>{{ end }}
-  </header>
-  <hr>
-  {{ .Content }}
-</article>
+<div class="page-layout">
+  <article>
+    <nav class="breadcrumb"><a href="{{ .Site.Home.RelPermalink }}">← Αρχική</a></nav>
+    <header class="article-header">
+      <h1>{{ .Title }}</h1>
+      {{ with .Params.Subtitle }}<p class="article-meta">{{ . }}</p>{{ end }}
+      {{ with .Params.Author }}<p class="article-meta author">{{ . }}</p>{{ end }}
+    </header>
+    <hr>
+    {{ .Content }}
+  </article>
+  {{ with .TableOfContents }}
+  <aside class="toc">
+    <p class="toc-label">Περιεχόμενα</p>
+    {{ . }}
+  </aside>
+  {{ end }}
+</div>
 {{ end }}

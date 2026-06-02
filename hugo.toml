@@ -1,8 +1,13 @@
 baseURL = "https://sotirismorf.github.io/thmmy-notes/"
-languageCode = 'el'
+locale = 'el'
 title = 'THMMY notes - sotirismorf'
+disableKinds = ['taxonomy', 'term']
 
 [markup]
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 3
+    ordered = false
   [markup.goldmark]
     [markup.goldmark.extensions]
       [markup.goldmark.extensions.passthrough]

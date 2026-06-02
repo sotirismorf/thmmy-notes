@@ -1,0 +1,129 @@
+\documentclass[a4paper,10.5pt]{article}
+
+% \usepackage[utf8]{inputenc}
+\usepackage[english,greek]{babel}
+% \usepackage[T1]{fontenc}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\usepackage{array}
+
+\usepackage{geometry}
+\geometry{margin=2cm}
+
+\begin{document}
+
+Table of Fourier Transform Pairs
+
+\small
+
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|>{\centering\arraybackslash}m{3cm}|
+                >{\centering\arraybackslash}m{3cm}|
+                >{\centering\arraybackslash}m{4cm}|
+                >{\centering\arraybackslash}m{4cm}|}
+
+\hline
+\textbf{Property} & \textbf{Signal} & \textbf{FT in $f$} & \textbf{FT in $\omega$} \\
+
+\hline
+Linearity & $a x_1(t) + b x_2(t)$ & $a X_1(f) + b X_2(f)$ & $a X_1(\omega) + b X_2(\omega)$ \\
+\hline
+Time delay & $x(t-t_0)$ & $X(f)e^{-j 2\pi f t_0}$ & $X(\omega)e^{-j \omega t_0}$ \\
+\hline
+Frequency Translation & $x(t)e^{j 2\pi f_0 t}$ & $X(f-f_0)$ & $X(\omega-\omega_0)$ \\
+\hline
+Convolution & $x_1(t) * x_2(t)$ & $X_1(f) X_2(f)$ & $X_1(\omega) X_2(\omega)$ \\
+\hline
+Multiplication & $x_1(t)\,x_2(t)$ & $X_1(f) * X_2(f)$ & $\tfrac{1}{2\pi} X_1(\omega) * X_2(\omega)$ \\
+\hline
+Parseval's Theorem & $\int_{-\infty}^\infty |x(t)|^2 dt$ & $\int_{-\infty}^\infty |X(f)|^2 df$ & $\tfrac{1}{2\pi}\int_{-\infty}^\infty |X(\omega)|^2 d\omega$ \\
+\hline
+
+	Rectangle &
+	$\Pi\!\left(\tfrac{t}{\tau}\right)$ &
+	$\tau \,\mathrm{sinc}(f\tau)$ &
+	$\tau \,\mathrm{sinc}\!\left(\tfrac{\omega \tau}{2\pi}\right)$
+	\\
+
+\hline
+
+	sinc() &
+        $ \mathrm{sinc}(Wt)$ & 
+        $ \tfrac{1}{W} \Pi\!\left(\tfrac{f}{W}\right)$ & 
+        $ \tfrac{1}{W} \Pi\!\left(\tfrac{\omega}{2\pi W}\right)$ 
+        \\
+
+\hline
+
+                sinc$^2$() & 
+                $ \mathrm{sinc}^2(Wt)$ & 
+                $ \tfrac{1}{W}\,\mathrm{tri}\!\left(\tfrac{f}{W}\right)$ & 
+                $ \tfrac{1}{W}\,\mathrm{tri}\!\left(\tfrac{\omega}{2\pi W}\right)$ 
+                \\
+
+\hline
+Triangle & $\Lambda\!\left(\tfrac{t}{\tau}\right)$ & $\tau\,\mathrm{sinc}^2(f\tau)$ & $\tau\,\mathrm{sinc}^2\!\left(\tfrac{\omega \tau}{2\pi}\right)$ \\
+\hline
+Exponential & $e^{-at}u(t),\; a>0$ & $\tfrac{1}{a + j 2\pi f}$ & $\tfrac{1}{a + j \omega}$ \\
+\hline
+Impulse & $A \delta(t)$ & $A$ & $A$ \\
+\hline
+Constant & $A$ & $A \delta(f)$ & $2\pi A \delta(\omega)$ \\
+\hline
+Complex exponential & $e^{j 2\pi f_0 t}$ & $\delta(f-f_0)$ & $2\pi \delta(\omega-\omega_0)$ \\
+\hline
+\end{tabular}
+\end{center}
+
+Energy Signals
+
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|>{\centering\arraybackslash}m{3cm}|
+                >{\centering\arraybackslash}m{3cm}|
+                >{\centering\arraybackslash}m{4cm}|
+                >{\centering\arraybackslash}m{4cm}|}
+
+\hline
+\textbf{Signal} & \textbf{$x(t)$} & \textbf{FT in $f$} & \textbf{FT in $\omega$} \\
+\hline
+
+Impulse & $\delta(t)$ & $1$ & $1$ \\
+
+\hline
+
+DC (constant) & $1$ & $\delta(f)$ & $2\pi \delta(\omega)$ \\
+
+\hline
+
+Cosine & $\cos(2\pi f_0 t)$ & $\tfrac{1}{2}\big[\delta(f-f_0)+\delta(f+f_0)\big]$ & $\pi\big[\delta(\omega-\omega_0)+\delta(\omega+\omega_0)\big]$ \\
+
+\hline
+
+Sine & $\sin(2\pi f_0 t)$ & $\tfrac{1}{2j}\big[\delta(f-f_0)-\delta(f+f_0)\big]$ & $j\pi\big[\delta(\omega+\omega_0)-\delta(\omega-\omega_0)\big]$ \\
+
+\hline
+
+Complex exponential & $e^{j 2\pi f_0 t}$ & $\delta(f-f_0)$ & $2\pi \delta(\omega-\omega_0)$ \\
+
+\hline
+
+Unit step & $u(t)$ & $\tfrac{1}{j 2\pi f} + \tfrac{1}{2}\delta(f)$ & $\tfrac{1}{j \omega} + \pi \delta(\omega)$ \\
+
+\hline
+
+Signum &
+$\mathrm{sgn}(t)$ &
+$\tfrac{1}{j\pi f}$ &
+$\tfrac{2}{j\omega}$ \\
+
+\hline
+
+\end{tabular}
+\end{center}
+
+\end{document}

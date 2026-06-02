@@ -145,6 +145,77 @@ li { margin: 0.2rem 0; }
 input[type="checkbox"] { display: none; }
 ul:hover input[type="checkbox"]:checked { display: inline-block; }
 
+/* Page layout with TOC sidebar */
+
+.page-layout {
+  max-width: var(--max-width);
+  margin-inline: auto;
+}
+
+.page-layout > article {
+  max-width: none;
+  margin: 0;
+}
+
+.toc { display: none; }
+
+@media (min-width: 72rem) {
+  .page-layout {
+    display: grid;
+    grid-template-columns: var(--max-width) 13rem;
+    column-gap: 3rem;
+    max-width: calc(var(--max-width) + 3rem + 13rem);
+  }
+
+  .toc {
+    display: block;
+    position: sticky;
+    top: 2rem;
+    align-self: start;
+    max-height: calc(100vh - 4rem);
+    overflow-y: auto;
+    font-size: 0.8125rem;
+    padding-top: 5.5rem;
+  }
+}
+
+.toc-label {
+  font-weight: 600;
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-muted);
+  margin: 0 0 0.6rem;
+}
+
+#TableOfContents ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#TableOfContents ul ul {
+  padding-left: 0.75rem;
+  margin-top: 0.15rem;
+}
+
+#TableOfContents li { margin: 0.3rem 0; }
+
+#TableOfContents a {
+  color: var(--text-muted);
+  text-decoration: none;
+  line-height: 1.35;
+  display: block;
+  transition: color 0.1s;
+}
+
+#TableOfContents a:hover,
+#TableOfContents a.active {
+  color: var(--text);
+}
+
+#TableOfContents a.active { font-weight: 500; }
+
 /* Homepage */
 
 .page-list {
