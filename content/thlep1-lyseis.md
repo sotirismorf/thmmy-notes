@@ -180,6 +180,242 @@ $$\beta = -4\alpha \quad \text{ή} \quad \beta = -\frac{\alpha}{2}$$
 
 ---
 
+### Θέμα 2
+
+<p class="exercise-tags"><span class="tag">FM Διαμόρφωση</span><span class="tag">Υπερετερόδυνος Δέκτης</span><span class="tag">Αρμονικές Bessel</span></p>
+
+#### Εκφώνηση
+
+Σύστημα επικοινωνίας αέρος–εδάφους βασίζεται σε διαμόρφωση FM. Το σήμα πληροφορίας από το εναέριο μέσο, $m(t)$, είναι ο τόνος που φαίνεται στο Σχήμα 2. Το σήμα αυτό διαμορφώνεται κατά FM με συχνότητα φέροντος $f_c = 90\,\mathrm{MHz}$, πλάτος φέροντος $A_c = 2\,\mathrm{V}$ και απόκλιση συχνότητας διαμορφωτή $5\,\mathrm{kHz}$. Στο έδαφος χρησιμοποιείται υπερετερόδυνος δέκτης που διαθέτει φίλτρο RF με ζώνη διέλευσης $85$–$95\,\mathrm{MHz}$ και φίλτρο IF με κεντρική συχνότητα $f_{IF} = 0.5\,\mathrm{MHz}$.
+
+Από το Σχήμα 2, ο τόνος $m(t)$ έχει πλάτος $0.4\,\mathrm{V}$ και περίοδο $1\,\mathrm{ms}$, δηλαδή $m(t) = 0.4\cos(2\pi\cdot 1000\,t)$.
+
+{{< plotly >}}
+var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+var fontColor = dark ? '#e8e8ed' : '#1c1c1e';
+var zeroColor = dark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)';
+var gridColor = dark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)';
+
+// m(t) = 0.4 cos(2π·1000·t), t σε ms → δύο περίοδοι στα 0–2 ms
+var t = [], y = [];
+for (var i = 0; i <= 400; i++) {
+  var tm = 2 * i / 400;              // ms
+  t.push(tm);
+  y.push(0.4 * Math.cos(2 * Math.PI * tm));   // περίοδος 1 ms
+}
+
+var data = [{
+  x: t, y: y, type: 'scatter', mode: 'lines',
+  line: {color: '#3b82f6', width: 2.5},
+  showlegend: false, hoverinfo: 'skip'
+}];
+
+var layout = {
+  xaxis: {title: {text: 'time (msec)', font: {color: fontColor}},
+          range: [0, 2], dtick: 0.2, showgrid: true, gridcolor: gridColor,
+          zeroline: false, color: fontColor},
+  yaxis: {title: {text: 'Volt', font: {color: fontColor}},
+          range: [-0.45, 0.45], dtick: 0.1, showgrid: true, gridcolor: gridColor,
+          zeroline: true, zerolinecolor: zeroColor, color: fontColor},
+  margin: {t: 15, b: 45, l: 50, r: 15},
+  height: 250,
+  paper_bgcolor: 'rgba(0,0,0,0)',
+  plot_bgcolor:  'rgba(0,0,0,0)',
+  font: {color: fontColor},
+};
+
+Plotly.newPlot(gd, data, layout, {responsive: true, displayModeBar: false});
+{{< /plotly >}}
+
+<p style="text-align:center; font-style:italic; font-size:0.9em;">Σχήμα 2: Σήμα πληροφορίας $m(t)$.</p>
+
+**α-10)** Να βρεθούν η συχνότητα $f_m$ του σήματος $m(t)$, η ευαισθησία συχνότητας $K_f$, ο δείκτης διαμόρφωσης $\beta_f$, καθώς και οι εικονικές συχνότητες σε περίπτωση που χρησιμοποιείται i) έγχυση υψηλής ζώνης (HSI) και ii) έγχυση χαμηλής ζώνης (LSI).
+
+**β-10)** Να υπολογιστεί η ισχύς της αρμονικής στην συχνότητα φέροντος του διαμορφωμένου σήματος σε dBm.
+
+**γ-5)** Λόγω παρεμβολών υπάρχουν ανεπιθύμητες εκπομπές (παρεμβολές) στην εικονική συχνότητα LSI και στην εικονική συχνότητα HSI. Ποιος από τους δύο παρεμβολείς θα μπορούσε να δημιουργήσει πρόβλημα;
+
+**δ-10)** Αν επιλεγεί ένα στενότερο φίλτρο RF με ζώνη διέλευσης $87.5$–$90.5\,\mathrm{MHz}$ και LSI, θα υπάρχει παρεμβολή; Εάν ναι, θεωρήστε ότι το σήμα παρεμβολής είναι ημιτονοειδές με μοναδιαίο πλάτος και συχνότητα $f_{m_2} = 0.5\,\mathrm{MHz}$ και διαμορφώνεται κατά FM με συχνότητα φέροντος $f_{c_2}$ που ισούται με την εικονική συχνότητα, πλάτος φέροντος $A_{c_2} = 0.5\,\mathrm{V}$ και ευαισθησία συχνότητας $K_{f_2} = 1.5\,\mathrm{MHz/V}$. Να εξετάσετε εάν το σήμα αυτό προκαλεί ισχυρή παρεμβολή στην συχνότητα $90\,\mathrm{MHz}$, δηλαδή εάν ο λόγος των ισχύων επιθυμητού σήματος προς παρεμβολής είναι **μικρότερος** από $5\,\mathrm{dB}$.
+
+#### Λύση
+
+##### Μέρος α
+
+**Συχνότητα $f_m$.** Από το Σχήμα 2, μία πλήρης περίοδος του τόνου ολοκληρώνεται σε $T = 1\,\mathrm{ms}$:
+
+$$f_m = \frac{1}{T} = \frac{1}{10^{-3}} = \boxed{1\,\mathrm{kHz}}$$
+
+**Ευαισθησία $K_f$.** Η απόκλιση συχνότητας είναι $\Delta f = K_f\cdot\max|m(t)| = K_f\cdot A_m$, με $A_m = 0.4\,\mathrm{V}$ και $\Delta f = 5\,\mathrm{kHz}$:
+
+$$K_f = \frac{\Delta f}{A_m} = \frac{5000}{0.4} = \boxed{12.5\,\mathrm{kHz/V}}$$
+
+**Δείκτης διαμόρφωσης $\beta_f$.**
+
+$$\beta_f = \frac{\Delta f}{f_m} = \frac{k_f A_m}{f_m} = \frac{5\,\mathrm{kHz}}{1\,\mathrm{kHz}} = \boxed{5}$$
+
+**Εικονικές συχνότητες.** Με $f_{IF} = 0.5\,\mathrm{MHz}$ ο τοπικός ταλαντωτής και η εικονική συχνότητα είναι:
+
+- **HSI** (έγχυση υψηλής ζώνης): $f_{LO} = f_c + f_{IF} = 90.5\,\mathrm{MHz}$, εικονική $f_{im}^{HSI} = f_c + 2f_{IF} = \boxed{91\,\mathrm{MHz}}$
+- **LSI** (έγχυση χαμηλής ζώνης): $f_{LO} = f_c - f_{IF} = 89.5\,\mathrm{MHz}$, εικονική $f_{im}^{LSI} = f_c - 2f_{IF} = \boxed{89\,\mathrm{MHz}}$
+
+(Η εικονική συχνότητα απέχει $2f_{IF}$ από το επιθυμητό φέρον· και οι δύο δίνουν στην IF το ίδιο $0.5\,\mathrm{MHz}$ μετά τη μίξη με τον $f_{LO}$.)
+
+{{< plotly >}}
+var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+var fontColor = dark ? '#e8e8ed' : '#1c1c1e';
+var zeroColor = dark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)';
+
+function stem(x, h, color, name, show, row) {
+  return {x: [x, x], y: [0, h], xaxis: row === 2 ? 'x2' : 'x', yaxis: row === 2 ? 'y2' : 'y',
+    type: 'scatter', mode: 'lines+markers+text', line: {color: color, width: 2.5},
+    marker: {symbol: 'circle', size: 7, color: color},
+    text: ['', name], textposition: 'top center', textfont: {size: 10, color: color},
+    name: name, showlegend: false, hoverinfo: 'skip'};
+}
+
+var data = [
+  // HSI: επιθυμητό 90, f_LO 90.5, εικονική 91
+  stem(90,   1.0, '#3b82f6', 'f_c = 90', false, 1),
+  stem(90.5, 0.75, '#f97316', 'f_LO = 90.5', false, 1),
+  stem(91,   1.0, '#ef4444', 'f_im = 91', false, 1),
+  // LSI: εικονική 89, f_LO 89.5, επιθυμητό 90
+  stem(89,   1.0, '#ef4444', 'f_im = 89', false, 2),
+  stem(89.5, 0.75, '#f97316', 'f_LO = 89.5', false, 2),
+  stem(90,   1.0, '#3b82f6', 'f_c = 90', false, 2),
+];
+
+var rfband = function(row) {
+  return {x: [85, 85, 95, 95], y: [0, 1.25, 1.25, 0],
+    xaxis: row === 2 ? 'x2' : 'x', yaxis: row === 2 ? 'y2' : 'y',
+    type: 'scatter', mode: 'lines', line: {width: 0}, fill: 'toself',
+    fillcolor: 'rgba(120,120,120,0.10)', showlegend: false, hoverinfo: 'skip'};
+};
+data.unshift(rfband(1), rfband(2));
+
+var ax = {range: [88, 92], showgrid: false, zeroline: false, color: fontColor,
+          tickvals: [88, 89, 90, 91, 92]};
+var ay = {range: [0, 1.45], showticklabels: false, showgrid: false,
+          zeroline: true, zerolinecolor: zeroColor};
+
+var layout = {
+  grid: {rows: 2, columns: 1, pattern: 'independent'},
+  xaxis:  Object.assign({title: {text: 'HSI — f (MHz)', font: {size: 11, color: fontColor}}}, ax),
+  yaxis:  Object.assign({anchor: 'x'}, ay),
+  xaxis2: Object.assign({title: {text: 'LSI — f (MHz)', font: {size: 11, color: fontColor}}}, ax),
+  yaxis2: Object.assign({anchor: 'x2'}, ay),
+  margin: {t: 20, b: 50, l: 10, r: 10},
+  height: 340,
+  paper_bgcolor: 'rgba(0,0,0,0)',
+  plot_bgcolor:  'rgba(0,0,0,0)',
+  font: {color: fontColor},
+};
+
+Plotly.newPlot(gd, data, layout, {responsive: true, displayModeBar: false});
+{{< /plotly >}}
+
+##### Μέρος β
+
+Στο FM σήμα η αρμονική στη **συχνότητα φέροντος** είναι ο όρος $J_0(\beta_f)$ του αναπτύγματος Bessel, με ισχύ:
+
+$$P_{f_c} = \frac{A_c^2}{2}\,J_0^2(\beta_f)$$
+
+Για $\beta_f = 5$ (από πίνακα Bessel $J_0(5) = -0.178$):
+
+$$P_{f_c} = \frac{2^2}{2}\cdot(-0.178)^2 = 2\cdot 0.0316 = 0.0631\,\mathrm{W} = 63.1\,\mathrm{mW}$$
+
+Σε dBm:
+
+$$P_{f_c}\,[\mathrm{dBm}] = 10\log_{10}\!\left(\frac{63.1\,\mathrm{mW}}{1\,\mathrm{mW}}\right) = 10\log_{10}(63.1) \approx \boxed{18.0\,\mathrm{dBm}}$$
+
+##### Μέρος γ
+
+Ρόλος του φίλτρου RF είναι να **απορρίπτει την εικονική συχνότητα** πριν τη μίξη. Όποια εικονική πέφτει **μέσα** στη ζώνη διέλευσης ($85$–$95\,\mathrm{MHz}$) δεν αποκόπτεται και μεταφέρεται στην IF μαζί με το επιθυμητό σήμα:
+
+- $f_{im}^{LSI} = 89\,\mathrm{MHz} \in [85, 95]$ → **περνά** τον RF
+- $f_{im}^{HSI} = 91\,\mathrm{MHz} \in [85, 95]$ → **περνά** τον RF
+
+Και οι **δύο** εικονικές βρίσκονται εντός της ζώνης διέλευσης, οπότε το ευρύ φίλτρο RF δεν απορρίπτει καμία — **και οι δύο παρεμβολείς μπορούν να δημιουργήσουν πρόβλημα**. (Γι' αυτό στο επόμενο ερώτημα δοκιμάζεται στενότερο φίλτρο.)
+
+##### Μέρος δ
+
+**Υπάρχει παρεμβολή;** Με το στενότερο φίλτρο RF ($87.5$–$90.5\,\mathrm{MHz}$) και LSI, η εικονική συχνότητα είναι $f_{im}^{LSI} = 89\,\mathrm{MHz}$:
+
+$$89\,\mathrm{MHz} \in [87.5,\ 90.5] \implies \textbf{ναι, η εικονική περνά → υπάρχει παρεμβολή}$$
+
+(Σημείωση: η HSI εικονική στα $91\,\mathrm{MHz}$ θα είχε απορριφθεί από αυτό το φίλτρο — γι' αυτό εξετάζεται η LSI.)
+
+**Χαρακτηριστικά του παρεμβάλλοντος FM σήματος.** Φέρον $f_{c_2} = f_{im}^{LSI} = 89\,\mathrm{MHz}$, $A_{c_2} = 0.5\,\mathrm{V}$, $K_{f_2} = 1.5\,\mathrm{MHz/V}$, τόνος $f_{m_2} = 0.5\,\mathrm{MHz}$ μοναδιαίου πλάτους:
+
+$$\Delta f_2 = K_{f_2}\cdot A_{m_2} = 1.5\cdot 1 = 1.5\,\mathrm{MHz}, \qquad \beta_2 = \frac{\Delta f_2}{f_{m_2}} = \frac{1.5}{0.5} = 3$$
+
+**Ποια συνιστώσα πέφτει στα $90\,\mathrm{MHz}$;** Το FM φάσμα του παρεμβολέα έχει αρμονικές στα $f_{c_2} + n f_{m_2} = 89 + 0.5n\,\mathrm{MHz}$. Η συνιστώσα στα $90\,\mathrm{MHz}$ αντιστοιχεί σε $n = 2$:
+
+$$89 + 0.5\cdot 2 = 90\,\mathrm{MHz} \quad(\text{αρμονική } J_2(\beta_2))$$
+
+**Λόγος ισχύων στα $90\,\mathrm{MHz}$.** Συγκρίνουμε τη συνιστώσα του επιθυμητού σήματος στα $90\,\mathrm{MHz}$ (το φέρον του, $J_0(\beta_f)$) με τη συνιστώσα του παρεμβολέα στα $90\,\mathrm{MHz}$ (η αρμονική $n=2$, $J_2(\beta_2)$):
+
+$$P_S = \frac{A_c^2}{2}J_0^2(\beta_f) = \frac{2^2}{2}\,J_0^2(5) = 2\cdot(0.178)^2 = 0.0631\,\mathrm{W}$$
+
+$$P_I = \frac{A_{c_2}^2}{2}J_2^2(\beta_2) = \frac{0.5^2}{2}\,J_2^2(3) = 0.125\cdot(0.486)^2 = 0.0295\,\mathrm{W}$$
+
+$$\frac{P_S}{P_I} = \frac{0.0631}{0.0295} = 2.14 \implies 10\log_{10}(2.14) \approx \boxed{3.3\,\mathrm{dB}}$$
+
+**Συμπέρασμα.** $\dfrac{P_S}{P_I} \approx 3.3\,\mathrm{dB} < 5\,\mathrm{dB}$ → ο λόγος επιθυμητού προς παρεμβολή είναι **μικρότερος** από $5\,\mathrm{dB}$, άρα **το σήμα προκαλεί ισχυρή παρεμβολή** στα $90\,\mathrm{MHz}$.
+
+{{< plotly >}}
+var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+var fontColor = dark ? '#e8e8ed' : '#1c1c1e';
+var zeroColor = dark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)';
+
+// παρεμβολέας: FM φέρον 89 MHz, β2=3, A_c2=0.5 → ύψος (A_c2/2)|J_n(3)|
+var Jn3 = {0: 0.2601, 1: 0.3391, 2: 0.4861, 3: 0.3091, 4: 0.1320};
+var idata = [];
+for (var n = -3; n <= 3; n++) {
+  var f = 89 + 0.5 * n;
+  var h = 0.25 * Jn3[Math.abs(n)];
+  var hot = (n === 2);
+  idata.push({x: [f, f], y: [0, h], type: 'scatter', mode: 'lines+markers',
+    line: {color: hot ? '#ef4444' : 'rgba(239,68,68,0.45)', width: hot ? 3 : 2},
+    marker: {size: hot ? 8 : 5, color: hot ? '#ef4444' : 'rgba(239,68,68,0.45)'},
+    showlegend: false, hoverinfo: 'skip'});
+}
+
+// επιθυμητό φέρον στα 90 MHz: ύψος (A_c/2)|J_0(5)| = 1*0.178
+idata.push({x: [90, 90], y: [0, 0.178], type: 'scatter', mode: 'lines+markers',
+  line: {color: '#3b82f6', width: 3}, marker: {size: 8, color: '#3b82f6'},
+  showlegend: false, hoverinfo: 'skip'});
+
+var layout = {
+  xaxis: {range: [87.2, 90.8], showgrid: false, zeroline: false, color: fontColor,
+          tickvals: [87.5, 88, 88.5, 89, 89.5, 90, 90.5],
+          title: {text: 'f (MHz)', font: {color: fontColor}}},
+  yaxis: {range: [0, 0.21], showticklabels: false, showgrid: false,
+          zeroline: true, zerolinecolor: zeroColor},
+  annotations: [
+    {text: 'επιθυμητό f_c (J₀)', x: 90, y: 0.178, ax: 30, ay: -25,
+     showarrow: true, arrowhead: 2, arrowcolor: '#3b82f6',
+     font: {size: 10, color: '#3b82f6'}},
+    {text: 'παρεμβολή n=2 (J₂)', x: 90, y: 0.122, ax: -45, ay: -45,
+     showarrow: true, arrowhead: 2, arrowcolor: '#ef4444',
+     font: {size: 10, color: '#ef4444'}},
+    {text: 'φέρον παρεμβολέα<br>f_{c2} = 89', x: 89, y: 0.065, ax: -10, ay: -35,
+     showarrow: true, arrowhead: 2, arrowcolor: 'rgba(239,68,68,0.6)',
+     font: {size: 9, color: fontColor}},
+  ],
+  margin: {t: 30, b: 45, l: 10, r: 10},
+  height: 260,
+  paper_bgcolor: 'rgba(0,0,0,0)',
+  plot_bgcolor:  'rgba(0,0,0,0)',
+  font: {color: fontColor},
+};
+
+Plotly.newPlot(gd, idata, layout, {responsive: true, displayModeBar: false});
+{{< /plotly >}}
+
+Η αρμονική $n=2$ του παρεμβολέα (στα $89 + 2\cdot 0.5 = 90\,\mathrm{MHz}$) συμπίπτει με το φέρον του επιθυμητού σήματος και, επειδή ο λόγος $P_S/P_I$ είναι μόλις $3.3\,\mathrm{dB}$, υπερισχύει η παρεμβολή.
+
+---
+
 ## Ιούλιος 2025
 
 ### Θέμα 1

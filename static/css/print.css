@@ -1,27 +1,137 @@
 @page {
   size: A4;
-  margin: 2.5cm;
+  margin: 2cm 2cm;
 }
 
-html {
-  font-size: 11pt;
+/* Force a light palette for paper, regardless of the OS dark/light setting.
+   This sheet is loaded with media="print" and after styles.css, so it wins
+   over the prefers-color-scheme:dark variables when printing. */
+:root {
+  --text:       #000000;
+  --text-muted: #444444;
+  --bg:         #ffffff;
+  --border:     #999999;
+  --bg-subtle:  #f1f1f3;
+  --link:       #0040a0;
 }
+
+html { font-size: 10.5pt; }
 
 body {
   padding: 0;
+  line-height: 1.5;
+  color: #000;
+  background: #fff;
 }
 
-nav { display: none; }
+/* Print full width — hide the on-screen TOC sidebar */
+nav { display: none !important; }
+.toc { display: none !important; }
+.page-layout, .page-layout > article, article, main { max-width: none; }
 
-h1, h2, h3, h4 { page-break-after: avoid; }
+/* Headings — keep them proportionate, not oversized */
+h1 { font-size: 17pt; margin: 0 0 0.2rem; }
+h2 { font-size: 13.5pt; margin-top: 1.1rem; }
+h3 { font-size: 12pt; margin-top: 1rem; }
+h4 { font-size: 11pt; margin-top: 0.8rem; }
+h5 { font-size: 10.5pt; margin-top: 0.6rem; }
+h1, h2, h3, h4, h5 { page-break-after: avoid; }
 
-p {
-  font-size: 11pt;
-  text-align: justify;
-}
-
+p, li { font-size: 10.5pt; }
+p { text-align: justify; orphans: 3; widows: 3; }
 blockquote { text-align: start; }
+
+/* The Θέμα heading + tags + statement box are grouped (see baseof.html) into
+   .exercise-keep, so the whole unit moves to the next page together rather than
+   leaving the heading stranded above a white gap. */
+.exercise-keep { break-inside: avoid; page-break-inside: avoid; }
+.exercise-tags { break-inside: avoid; }
+
+a { color: #000; text-decoration: none; }
 
 input[type="checkbox"] { display: inline-block; }
 
-pre, table { page-break-inside: avoid; }
+/* Keep blocks intact across page breaks */
+pre, table, figure { page-break-inside: avoid; }
+
+/* Tables — browsers drop background fills on print by default, which wipes the
+   header/zebra styling. Force them back with print-color-adjust + solid borders. */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0.9rem 0;
+  font-size: 9.5pt;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+th, td {
+  border: 0.5pt solid #888;
+  padding: 0.3rem 0.5rem;
+  text-align: left;
+}
+
+th {
+  background: #e6e6e6 !important;
+  font-weight: 700;
+  color: #000;
+}
+
+tr:nth-child(even) td { background: #f4f4f4 !important; }
+
+thead { display: table-header-group; }   /* repeat header if a table spans pages */
+
+/* Tags */
+.exercise-tags { margin: 0.2rem 0 0.6rem; }
+.tag {
+  border: 1px solid #999;
+  color: #333;
+  background: #fff;
+}
+
+/* Exercise statement box — framed on paper too */
+.exercise-statement {
+  border: 1px solid #888;
+  border-left: 3px solid #555;
+  background: #f5f5f5;
+  border-radius: 6px;
+  padding: 0.3rem 0.9rem 0.7rem;
+  margin: 0.8rem 0 1.2rem;
+  /* Keep the whole box on one page — if it doesn't fit, it moves intact to the
+     next page. The heading + tags are glued to it (page-break-after: avoid on
+     each), so they travel along and never get stranded above a white gap. */
+  break-inside: avoid;
+  page-break-inside: avoid;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.exercise-statement > h4:first-child {
+  color: #000;
+  font-size: 8.5pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0.5rem 0 0.4rem;
+  /* Don't let the box start at the very bottom with its label orphaned */
+  page-break-after: avoid;
+  break-after: avoid;
+}
+
+/* ---- Plotly charts on paper ----
+   Plotly bakes colors in at render time from prefers-color-scheme, so when
+   printing from a dark-themed browser its text/axis lines come out light and
+   invisible. Force readable colors via !important (beats Plotly's inline styles). */
+.js-plotly-plot { page-break-inside: avoid; max-width: 100%; }
+
+.js-plotly-plot text { fill: #1c1c1e !important; }
+
+.js-plotly-plot .gridlayer path {
+  stroke: rgba(0, 0, 0, 0.12) !important;
+}
+
+.js-plotly-plot .zerolinelayer path,
+.js-plotly-plot .xlines-above path,
+.js-plotly-plot .ylines-above path {
+  stroke: rgba(0, 0, 0, 0.4) !important;
+}

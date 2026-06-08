@@ -134,6 +134,29 @@ pre code {
   white-space: nowrap;
 }
 
+/* Exercise statement box */
+
+.exercise-statement {
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--link);
+  background: var(--bg-subtle);
+  border-radius: 8px;
+  padding: 0.4rem 1.25rem 1rem;
+  margin: 1.1rem 0 1.75rem;
+}
+
+.exercise-statement > h4:first-child {
+  margin-top: 0.7rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--link);
+}
+
+.exercise-statement > *:last-child { margin-bottom: 0; }
+
 /* Tables */
 
 table {

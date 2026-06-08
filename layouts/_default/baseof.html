@@ -30,6 +30,54 @@
 <body>
   {{ block "main" . }}{{ end }}
   <script>
+    // Wrap each "Εκφώνηση" heading + its following content (until the next
+    // heading or <hr>) in a .exercise-statement box, for visual framing.
+    (function () {
+      document.querySelectorAll('h4').forEach(function (h) {
+        if (h.textContent.trim() !== 'Εκφώνηση') return;
+        var box = document.createElement('div');
+        box.className = 'exercise-statement';
+        h.parentNode.insertBefore(box, h);
+        var cur = h;
+        while (cur) {
+          var next = cur.nextSibling;
+          box.appendChild(cur);
+          if (!next) break;
+          if (next.nodeType === 1 && /^(H1|H2|H3|H4|HR)$/.test(next.tagName)) break;
+          cur = next;
+        }
+      });
+    })();
+    // Group each Θέμα/exercise heading + its tags + the statement box into one
+    // "keep-together" wrapper, so on print they move to the next page as a unit
+    // (page-break-inside:avoid on the group is far more reliable than chaining
+    // page-break-after:avoid across the separate elements).
+    (function () {
+      document.querySelectorAll('.exercise-statement').forEach(function (box) {
+        var first = box;
+        var prev = box.previousElementSibling;
+        if (prev && prev.classList && prev.classList.contains('exercise-tags')) {
+          first = prev;
+          prev = prev.previousElementSibling;
+        }
+        if (prev && /^H[2-4]$/.test(prev.tagName)) {
+          first = prev;
+        }
+        if (first === box) return;            // nothing to group
+        var group = document.createElement('div');
+        group.className = 'exercise-keep';
+        box.parentNode.insertBefore(group, first);
+        var node = first;
+        while (node) {
+          var next = node.nextSibling;
+          group.appendChild(node);
+          if (node === box) break;
+          node = next;
+        }
+      });
+    })();
+  </script>
+  <script>
     (function () {
       const toc = document.getElementById('TableOfContents');
       if (!toc) return;
