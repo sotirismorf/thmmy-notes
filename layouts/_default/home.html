@@ -5,7 +5,10 @@
 
   {{ $all := .Site.RegularPages }}
   {{ $withSemester := where $all "Params.semester" "ne" "" }}
-  {{ $withoutSemester := where $all "Params.semester" "" }}
+  {{ $withoutSemester := slice }}
+  {{ range $all }}
+    {{ if not .Params.semester }}{{ $withoutSemester = $withoutSemester | append . }}{{ end }}
+  {{ end }}
 
   {{ range $withSemester.GroupByParam "semester" }}
   <div class="semester-group">
@@ -25,7 +28,9 @@
     <p class="semester-label">Άλλα</p>
     <ul class="page-list">
       {{ range $withoutSemester.ByTitle }}
-      <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+      <li>
+        <a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ with .Params.category }}<span class="category-chip">{{ . }}</span>{{ end }}
+      </li>
       {{ end }}
     </ul>
   </div>

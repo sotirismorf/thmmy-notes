@@ -184,10 +184,29 @@ tr:nth-child(even) td { background: var(--bg-subtle); }
 ul, ol { padding-left: 1.5rem; }
 li { margin: 0.2rem 0; }
 
-/* Checkboxes in task lists */
+/* Quiz / multiple-choice task lists.
+   Markdown: a `### Ερώτηση` followed by a task list, with `- [x]` on the
+   correct answer. Answers look neutral until the list is hovered (or tapped
+   on touch devices), then the correct row lights up. */
+
+ul:has(input[type="checkbox"]) {
+  list-style: none;
+  padding-left: 0;
+}
+
+li:has(input[type="checkbox"]) {
+  margin: 0;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  transition: background-color 0.15s ease;
+}
 
 input[type="checkbox"] { display: none; }
-ul:hover input[type="checkbox"]:checked { display: inline-block; }
+
+ul:has(input[type="checkbox"]):hover li:has(input[type="checkbox"]:checked) {
+  background: rgba(34, 197, 94, 0.18);
+  font-weight: 600;
+}
 
 /* Page layout with TOC sidebar */
 
