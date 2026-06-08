@@ -180,23 +180,16 @@ ul:hover input[type="checkbox"]:checked { display: inline-block; }
 
 .toc { display: none; }
 
-@media (min-width: 72rem) {
-  .page-layout {
-    display: grid;
-    grid-template-columns: var(--max-width) 13rem;
-    column-gap: 3rem;
-    max-width: calc(var(--max-width) + 3rem + 13rem);
-  }
-
+@media (min-width: 80rem) {
   .toc {
     display: block;
-    position: sticky;
+    position: fixed;
     top: 2rem;
-    align-self: start;
+    right: 1.5rem;
+    width: 13rem;
     max-height: calc(100vh - 4rem);
     overflow-y: auto;
     font-size: 0.8125rem;
-    padding-top: 5.5rem;
   }
 }
 
@@ -228,6 +221,9 @@ ul:hover input[type="checkbox"]:checked { display: inline-block; }
   line-height: 1.35;
   display: block;
   transition: color 0.1s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #TableOfContents a:hover,

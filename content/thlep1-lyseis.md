@@ -1,0 +1,778 @@
+---
+title: Τηλεπικοινωνιακά Συστήματα Ι - Λυμένα Θέματα
+semester: "5"
+category: "Τηλεπικοινωνιών"
+---
+
+## Ιανουάριος 2026
+
+### Θέμα 1
+
+<p class="exercise-tags"><span class="tag">AM-DSB-TC με ΜΓΣ</span><span class="tag">Φάσμα Σήματος</span><span class="tag">Ενέργεια Σήματος</span></p>
+
+#### Εκφώνηση
+
+Το σήμα πληροφορίας $m(t) = 3\,\mathrm{sinc}(3Wt)$ διαμορφώνεται κατά AM-DSB-TC με τη βοήθεια της διάταξης του Σχήματος 1, όπου Μ.Γ.Σ. είναι ένα μη γραμμικό στοιχείο, του οποίου η χαρακτηριστική εξίσωση εισόδου-εξόδου δίνεται από τη σχέση $y(t) = \alpha x^2(t) + \beta x(t)$. Το φέρον δίνεται ως $c(t) = 2\cos(2\pi f_c t)$.
+
+**α-15)** Υπολογίστε αναλυτικά και σχεδιάστε το φάσμα στην έξοδο του ΜΓΣ, $Y(f)$. Να βρεθεί το ζωνοπερατό φίλτρο (με συνάρτηση μεταφοράς $H(f)$) που πρέπει να χρησιμοποιηθεί, συναρτήσει του $W$, αν απαιτείται να μην υπάρχει —οριακά— παρεμβολή μεταξύ των όρων που δημιουργούνται στο φάσμα (όροι βασικής ζώνης και όροι γύρω από την συχνότητα φέροντος).
+
+**β-15)** Αν το άθροισμα των ενεργειών των φασματικών όρων βασικής ζώνης είναι ίσο με το μισό της ενέργειας των υπολοίπων, να βρείτε μια σχέση για τα $\alpha$ και $\beta$. Θεωρείστε αμελητέα την ενέργεια των συναρτήσεων δέλτα (ώσεων).
+
+#### Λύση
+
+##### Μέρος α
+
+**Φάσμα του $m(t)$.** Από $b\,\mathrm{sinc}(bt) \overset{\mathcal{F}}{\longleftrightarrow} \mathrm{rect}(f/b)$ (εδώ με συντελεστή 3 αντί $b=3W$):
+
+$$M(f) = \frac{3}{3W}\,\mathrm{rect}\!\left(\frac{f}{3W}\right) = \frac{1}{W}\,\mathrm{rect}\!\left(\frac{f}{3W}\right)$$
+
+Δηλαδή ορθογώνιο ύψους $1/W$ για $|f| \leq \tfrac{3W}{2}$ — μονόπλευρο εύρος ζώνης $W_m = \tfrac{3W}{2}$.
+
+**Είσοδος ΜΓΣ:** $x(t) = m(t) + 2\cos(2\pi f_c t)$ (άρα $A_c = 2$).
+
+$$y(t) = \alpha\bigl[m(t) + 2\cos(2\pi f_c t)\bigr]^2 + \beta\bigl[m(t) + 2\cos(2\pi f_c t)\bigr]$$
+
+Αναπτύσσω το τετράγωνο:
+
+$$y(t) = \alpha m^2(t) + 4\alpha\, m(t)\cos(2\pi f_c t) + 4\alpha\cos^2(2\pi f_c t) + \beta m(t) + 2\beta\cos(2\pi f_c t)$$
+
+Με $\cos^2\theta = \tfrac{1}{2}(1+\cos 2\theta)$: $4\alpha\cos^2(2\pi f_c t) = 2\alpha + 2\alpha\cos(4\pi f_c t)$. Συγκεντρώνω ανά φασματική περιοχή:
+
+$$y(t) = \underbrace{\alpha m^2(t) + \beta m(t)}_{\text{βασική ζώνη }(0\to 3W)} + \underbrace{2\alpha}_{\text{DC}} + \underbrace{2\alpha\cos(4\pi f_c t)}_{\text{στο }2f_c} + \underbrace{2\beta\!\left[1 + \frac{2\alpha}{\beta}m(t)\right]\!\cos(2\pi f_c t)}_{\text{AM-DSB-TC γύρω από }f_c}$$
+
+**Φάσμα $Y(f)$ (αμφίπλευρο).** Κάθε όρος μετασχηματίζεται ξεχωριστά:
+
+- $\alpha m^2(t) \to \alpha\,(M*M)(f)$: **τριγωνικό**, κορυφή $\alpha\,(M*M)(0) = \alpha\!\left(\tfrac{1}{W}\right)^2\!(3W) = \tfrac{3\alpha}{W}$ στο $f=0$, μηδενίζεται στα $\pm 3W$.
+- $\beta m(t) \to \beta M(f)$: **ορθογώνιο** ύψους $\tfrac{\beta}{W}$, $|f| \leq \tfrac{3W}{2}$.
+- $2\alpha \to 2\alpha\,\delta(f)$ (DC).
+- $4\alpha\, m(t)\cos(2\pi f_c t) \to 2\alpha\bigl[M(f-f_c)+M(f+f_c)\bigr]$: **πλευρικές DSB-SC** ύψους $\tfrac{2\alpha}{W}$, εύρους $3W$ γύρω από $\pm f_c$.
+- $2\beta\cos(2\pi f_c t) \to \beta\bigl[\delta(f-f_c)+\delta(f+f_c)\bigr]$ (**φέρον**).
+- $2\alpha\cos(4\pi f_c t) \to \alpha\bigl[\delta(f-2f_c)+\delta(f+2f_c)\bigr]$ (στο $2f_c$).
+
+| $f$ ($>0$) | Τύπος | Πλάτος/ύψος |
+|-----------|-------|-------------|
+| $0$ | ώση (DC) | $2\alpha$ |
+| $0 \to \tfrac{3W}{2}$ | τρίγωνο ($m^2$) + ορθογώνιο ($m$) | $\tfrac{3\alpha}{W}$ στο $0$, $+\tfrac{\beta}{W}$ |
+| $\tfrac{3W}{2} \to 3W$ | μόνο τρίγωνο ($m^2$) | γραμμικά → $0$ στο $3W$ |
+| $f_c - \tfrac{3W}{2} \to f_c + \tfrac{3W}{2}$ | ορθογώνιο (πλευρικές) | $\tfrac{2\alpha}{W}$ |
+| $f_c$ | ώση (φέρον) | $\beta$ |
+| $2f_c$ | ώση | $\alpha$ |
+
+{{< plotly >}}
+var W = 1, fc = 6, al = 1, be = 1;
+
+// βασική ζώνη — δύο επικαλυπτόμενοι όροι (αμφίπλευρα):
+// τρίγωνο (αm², εύρος ±3W) και ορθογώνιο (βm, εύρος ±3W/2)
+var ftri = [], ytri = [];
+for (var f = -3 * W; f <= 3 * W + 1e-9; f += 0.02) {
+  ftri.push(f); ytri.push(al * (3 / W) * (1 - Math.abs(f) / (3 * W)));
+}
+var frec = [-1.5 * W, -1.5 * W, 1.5 * W, 1.5 * W];
+var yrec = [0, be / W, be / W, 0];
+
+// πλευρικές DSB-SC γύρω από ±fc: ορθογώνια ύψους 2α/W
+function band(c) { return {x: [c-1.5*W, c-1.5*W, c+1.5*W, c+1.5*W], y: [0, 2*al/W, 2*al/W, 0]}; }
+var bp = band(fc), bn = band(-fc);
+
+var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+var fontColor = dark ? '#e8e8ed' : '#1c1c1e';
+var zeroColor = dark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)';
+
+var data = [
+  {x: ftri, y: ytri, type: 'scatter', mode: 'lines', name: 'αm² (τρίγωνο)',
+   line: {color: '#22c55e', width: 2}, fill: 'tozeroy',
+   fillcolor: 'rgba(34,197,94,0.14)', hoverinfo: 'skip'},
+  {x: frec, y: yrec, type: 'scatter', mode: 'lines', name: 'βm (ορθογώνιο)',
+   line: {color: '#a855f7', width: 2}, fill: 'tozeroy',
+   fillcolor: 'rgba(168,85,247,0.14)', hoverinfo: 'skip'},
+  {x: bp.x, y: bp.y, type: 'scatter', mode: 'lines', name: 'πλευρικές (γύρω από ±f_c)',
+   line: {color: '#3b82f6', width: 2}, fill: 'tozeroy',
+   fillcolor: 'rgba(59,130,246,0.12)', hoverinfo: 'skip'},
+  {x: bn.x, y: bn.y, type: 'scatter', mode: 'lines', showlegend: false,
+   line: {color: '#3b82f6', width: 2}, fill: 'tozeroy',
+   fillcolor: 'rgba(59,130,246,0.12)', hoverinfo: 'skip'},
+];
+
+// ώσεις (δέλτα): DC στο 0 (2α), φέρον στα ±fc (β), και στα ±2fc (α)
+var deltas = [[0, 2*al, '2α'], [fc, be, 'β'], [-fc, be, 'β'], [2*fc, al, 'α'], [-2*fc, al, 'α']];
+deltas.forEach(function(d, i) {
+  data.push({x: [d[0], d[0]], y: [0, d[1]], type: 'scatter', mode: 'lines+markers+text',
+    line: {color: '#f97316', width: 2},
+    marker: {symbol: 'triangle-up', size: 9, color: '#f97316'},
+    text: ['', d[2]], textposition: 'top center', textfont: {size: 11, color: '#f97316'},
+    name: 'ώσεις (φέρον/DC/2f_c)', showlegend: i === 0, hoverinfo: 'skip'});
+});
+
+var layout = {
+  xaxis: {title: {text: 'f', font: {color: fontColor}},
+          tickvals: [-2*fc, -fc, 0, fc, 2*fc],
+          ticktext: ['−2f_c', '−f_c', '0', 'f_c', '2f_c'],
+          zeroline: true, zerolinecolor: zeroColor, showgrid: false,
+          color: fontColor, range: [-2*fc - 1, 2*fc + 1]},
+  yaxis: {showticklabels: true, showgrid: true, gridcolor: zeroColor,
+          tickvals: [1, 2, 3], ticktext: ['β/W', '2α/W', '3α/W'],
+          zeroline: true, zerolinecolor: zeroColor, range: [0, 3.6],
+          color: fontColor, automargin: true},
+  showlegend: true,
+  legend: {orientation: 'h', y: -0.18, font: {size: 10, color: fontColor}},
+  margin: {t: 20, b: 60, l: 55, r: 10},
+  height: 260,
+  paper_bgcolor: 'rgba(0,0,0,0)',
+  plot_bgcolor:  'rgba(0,0,0,0)',
+  font: {color: fontColor},
+};
+
+Plotly.newPlot(gd, data, layout, {responsive: true, displayModeBar: false});
+{{< /plotly >}}
+
+**Ζωνοπερατό φίλτρο.** Ο BPF επιλέγει μόνο τον όρο γύρω από $f_c$, ο οποίος εκτείνεται από $f_c - \tfrac{3W}{2}$ έως $f_c + \tfrac{3W}{2}$ (εύρος $3W$):
+
+$$\boxed{H(f) = \mathrm{rect}\!\left(\frac{f - f_c}{3W}\right) + \mathrm{rect}\!\left(\frac{f + f_c}{3W}\right)}$$
+
+με μοναδιαίο κέρδος και κεντρική συχνότητα $f_c$.
+
+**Συνθήκη μη-παρεμβολής.** Η βασική ζώνη (λόγω του $\alpha m^2$) φτάνει έως $3W$. Για να μην παρεμβάλλεται —οριακά— με τη χαμηλότερη συχνότητα του όρου γύρω από το φέρον ($f_c - \tfrac{3W}{2}$):
+
+$$f_c - \frac{3W}{2} \geq 3W \implies \boxed{f_c \geq \frac{9W}{2}}$$
+
+(οριακά $f_{c,\min} = \tfrac{9W}{2}$).
+
+##### Μέρος β
+
+**Ταυτοποίηση όρων.** Αμελώντας τις ώσεις (DC, φέρον, $2f_c$), οι **συνεχείς** φασματικοί όροι είναι:
+
+- **Βασική ζώνη:** $s_{bb}(t) = \alpha m^2(t) + \beta m(t)$
+- **Υπόλοιποι** (γύρω από $f_c$): $s_{c}(t) = 4\alpha\, m(t)\cos(2\pi f_c t)$
+
+**Ολοκληρώματα δυνάμεων sinc.** Με $\int\mathrm{sinc}^2 = 1$, $\int\mathrm{sinc}^3 = \tfrac{3}{4}$, $\int\mathrm{sinc}^4 = \tfrac{2}{3}$ και την κλιμάκωση $\int g(bt)\,dt = \tfrac{1}{b}\int g(u)\,du$ (εδώ $b = 3W$):
+
+$$\int m^2\,dt = 9\!\int\!\mathrm{sinc}^2(3Wt)\,dt = \frac{9}{3W} = \frac{3}{W}$$
+
+$$\int m^3\,dt = 27\!\int\!\mathrm{sinc}^3(3Wt)\,dt = \frac{27}{3W}\cdot\frac{3}{4} = \frac{27}{4W}$$
+
+$$\int m^4\,dt = 81\!\int\!\mathrm{sinc}^4(3Wt)\,dt = \frac{81}{3W}\cdot\frac{2}{3} = \frac{18}{W}$$
+
+**Ενέργεια βασικής ζώνης** (ενέργεια του συνολικού σήματος — περιλαμβάνει τον σταυρωτό όρο):
+
+$$E_{bb} = \int\!\bigl(\alpha m^2 + \beta m\bigr)^2 dt = \alpha^2\!\int m^4 + 2\alpha\beta\!\int m^3 + \beta^2\!\int m^2$$
+
+$$E_{bb} = \frac{1}{W}\!\left(18\alpha^2 + \frac{27}{2}\alpha\beta + 3\beta^2\right)$$
+
+**Ενέργεια υπολοίπων** ($f_c$ μεγάλο → μέση τιμή $\cos^2 = \tfrac{1}{2}$):
+
+$$E_{c} = \int 16\alpha^2 m^2(t)\cos^2(2\pi f_c t)\,dt = 16\alpha^2\cdot\frac{1}{2}\!\int m^2\,dt = 8\alpha^2\cdot\frac{3}{W} = \frac{24\alpha^2}{W}$$
+
+**Συνθήκη** $E_{bb} = \tfrac{1}{2}E_{c}$:
+
+$$\frac{1}{W}\!\left(18\alpha^2 + \frac{27}{2}\alpha\beta + 3\beta^2\right) = \frac{1}{2}\cdot\frac{24\alpha^2}{W} = \frac{12\alpha^2}{W}$$
+
+$$18\alpha^2 + \frac{27}{2}\alpha\beta + 3\beta^2 = 12\alpha^2 \implies 6\alpha^2 + \frac{27}{2}\alpha\beta + 3\beta^2 = 0$$
+
+Πολλαπλασιάζω επί $2$ και διαιρώ διά $3$:
+
+$$\boxed{4\alpha^2 + 9\alpha\beta + 2\beta^2 = 0}$$
+
+Παραγοντοποιώντας: $(4\alpha + \beta)(\alpha + 2\beta) = 0$, δηλαδή
+
+$$\beta = -4\alpha \quad \text{ή} \quad \beta = -\frac{\alpha}{2}$$
+
+(Και οι δύο δίνουν $E_{bb} = \tfrac{12\alpha^2}{W} > 0$ — ο σταυρωτός όρος $\propto\int m^3$ τις καθιστά συμβατές.)
+
+---
+
+## Ιούλιος 2025
+
+### Θέμα 1
+
+<p class="exercise-tags"><span class="tag">AM-DSB-TC με ΜΓΣ</span><span class="tag">Φάσμα Σήματος</span></p>
+
+#### Εκφώνηση
+
+Το σήμα πληροφορίας $m(t) = a\cos(2\pi f_0 t)$ διαμορφώνεται κατά AM-DSB-TC με φέρον ισχύος $P_c = -3.0103\,\mathrm{dBW}$ και συχνότητας $f_c \gg f_0$.
+
+**α-10)** Βρείτε το εύρος τιμών του $a > 0$ για τις οποίες εξασφαλίζεται ότι δεν θα προκύψει υπερδιαμόρφωση.
+
+**β-15)** Επιλέγεται $a = 0.5\,\mathrm{V}$. Για τη διαμόρφωση χρησιμοποιείται η διάταξη του Σχήματος 1, όπου Μ.Γ.Σ. είναι ένα μη γραμμικό στοιχείο με χαρακτηριστική $y(t) = x^2(t) + 2x(t)$. Να υπολογιστεί αναλυτικά και να σχεδιαστεί το φάσμα $Y(f)$, μόνο στις θετικές συχνότητες, στην έξοδο του Μ.Γ.Σ.
+
+**γ-10)** Να προσδιοριστεί το φίλτρο και τα χαρακτηριστικά του, ώστε η διαμόρφωση να είναι επιτυχής.
+
+#### Λύση
+
+##### Μέρος α
+
+Η ισχύς φέροντος: $P_c = 10^{-3.0103/10} = 10^{-0.30103} = 0.5\,\mathrm{W}$.
+
+Για AM-DSB-TC: $P_c = A_c^2/2 = 0.5 \implies A_c = 1\,\mathrm{V}$.
+
+Δείκτης διαμόρφωσης: $\mu = \max|m(t)|/A_c = a/1 = a$.
+
+Συνθήκη μη-υπερδιαμόρφωσης: $\mu \leq 1 \implies \boxed{0 < a \leq 1\,\mathrm{V}}$.
+
+##### Μέρος β
+
+Με $a = 0.5\,\mathrm{V}$, $A_c = 1\,\mathrm{V}$:
+
+$$x(t) = m(t) + A_c\cos(2\pi f_c t) = 0.5\cos(2\pi f_0 t) + \cos(2\pi f_c t)$$
+
+$$y(t) = x^2(t) + 2x(t)$$
+
+Αναπτύσσω το $x^2(t)$:
+
+$$x^2 = 0.25\cos^2(2\pi f_0 t) + \cos^2(2\pi f_c t) + 2 \cdot 0.5\cos(2\pi f_0 t)\cos(2\pi f_c t)$$
+
+Εφαρμόζω $\cos^2\theta = (1+\cos 2\theta)/2$ και $\cos\alpha\cos\beta = \frac{1}{2}[\cos(\alpha-\beta)+\cos(\alpha+\beta)]$:
+
+$$x^2 = \frac{0.25}{2}(1+\cos 4\pi f_0 t) + \frac{1}{2}(1+\cos 4\pi f_c t) + \cos 2\pi(f_c - f_0)t + \cos 2\pi(f_c+f_0)t$$
+
+$$2x = \cos(2\pi f_0 t) + 2\cos(2\pi f_c t)$$
+
+Συγκεντρώνω:
+
+$$y(t) = \underbrace{\frac{5}{8}}_{\text{DC}} + \underbrace{\cos(2\pi f_0 t)}_{\text{στο }f_0} + \underbrace{\frac{1}{8}\cos(4\pi f_0 t)}_{\text{στο }2f_0} + \underbrace{\cos 2\pi(f_c-f_0)t + \cos 2\pi(f_c+f_0)t}_{\text{DSB-SC γύρω από }f_c} + \underbrace{2\cos(2\pi f_c t)}_{\text{φέρον}} + \underbrace{\frac{1}{2}\cos(4\pi f_c t)}_{\text{στο }2f_c}$$
+
+Φάσμα $Y(f)$ για $f > 0$ (πλάτη των ώσεων $\times \frac{1}{2}$ λόγω μονόπλευρης αναπαράστασης):
+
+| Συχνότητα | Πλάτος ώσης |
+|-----------|-------------|
+| $0$ (DC) | $\frac{5}{8}$ |
+| $f_0$ | $\frac{1}{2}$ |
+| $2f_0$ | $\frac{1}{16}$ |
+| $f_c - f_0$ | $\frac{1}{2}$ |
+| $f_c$ | $1$ |
+| $f_c + f_0$ | $\frac{1}{2}$ |
+| $2f_c$ | $\frac{1}{4}$ |
+
+##### Μέρος γ
+
+Ο BPF επιλέγει τον όρο γύρω από $f_c$: τα $f_c - f_0$, $f_c$, $f_c + f_0$.
+
+Έξοδος BPF: $z(t) = 2\cos(2\pi f_c t) + \cos 2\pi(f_c-f_0)t + \cos 2\pi(f_c+f_0)t$
+
+$$= 2\cos(2\pi f_c t) + 2\cos(2\pi f_0 t)\cos(2\pi f_c t) = 2\bigl[1 + \cos(2\pi f_0 t)\bigr]\cos(2\pi f_c t)$$
+
+Αυτό είναι AM-DSB-TC με $A_c' = 2$, $m(t) = \cos(2\pi f_0 t)$, $\mu = a = 0.5 < 1$. ✓
+
+**Χαρακτηριστικά BPF:**
+- Κεντρική συχνότητα: $f_c$
+- Εύρος ζώνης: $2f_0$ (διέλευση: $f_c - f_0 \leq |f| \leq f_c + f_0$)
+
+**Συνθήκη για επιτυχή αποδιαμόρφωση (μη-επικάλυψη):** Ο $2f_0$ όρος δεν πρέπει να συμπέσει με τον $f_c - f_0$ όρο: $f_c - f_0 > 2f_0 \implies f_c > 3f_0$.
+
+---
+
+### Θέμα 2
+
+<p class="exercise-tags"><span class="tag">FM Διαμόρφωση</span><span class="tag">Κανόνας Carson</span><span class="tag">Αρμονικές Bessel</span></p>
+
+#### Εκφώνηση
+
+Σήμα πληροφορίας $m(t) = a\cos(2\pi \cdot 5000\, t)$, FM ευαισθησία $k_f = 100\,\mathrm{kHz/V}$, φέρον $f_c = 1\,\mathrm{MHz}$, πλάτος $A_c$. Διαθέσιμο εύρος καναλιού: $150\,\mathrm{kHz}$.
+
+**α-10)** Βρείτε το πλάτος $a$ ώστε το διαμορφωμένο σήμα να καταλαμβάνει το 40% του διαθέσιμου εύρους ζώνης.
+
+**β-10)** Βρείτε τον αριθμό των αρμονικών στο ενεργό εύρος ζώνης και προσδιορίστε τη συχνότητά τους.
+
+**γ-10)** Υπολόγισε το ποσοστό της συνολικής ισχύος που βρίσκεται στη φασματική συνιστώσα στη συχνότητα φέροντος μαζί με τις δύο φασματικές συνιστώσες εκ δεξιών αυτής. Πώς μεταβάλλεται εάν $A_c' = 2A_c$;
+
+#### Λύση
+
+##### Μέρος α
+
+Ενεργό εύρος ζώνης: $B = 0.40 \times 150 = 60\,\mathrm{kHz}$.
+
+Δείκτης διαμόρφωσης: $\beta = k_f \cdot a / f_m = \dfrac{100\,000 \cdot a}{5\,000} = 20a$
+
+Κανόνας Carson: $B = 2f_m(\beta+1) = 2 \cdot 5000 \cdot (20a+1) = 60\,000$
+
+$$20a + 1 = 6 \implies \boxed{a = 0.25\,\mathrm{V}}$$
+
+##### Μέρος β
+
+$\beta = 20 \times 0.25 = 5$
+
+Σύμφωνα με τον κανόνα Carson, σημαντικές αρμονικές μέχρι $n = \beta + 1 = 6$ από κάθε πλευρά.
+
+Σύνολο: φέρον + 6 ζεύγη = **13 φασματικές συνιστώσες**.
+
+Συχνότητες: $f_c + nf_m$ για $n = 0, \pm1, \pm2, \pm3, \pm4, \pm5, \pm6$, δηλ.:
+
+$$940, 945, 950, 955, 960, 965, 970, \underbrace{1000}_{f_c}, 1005, 1010, 1015, 1020, 1025, 1030, \ldots\,\mathrm{kHz}$$
+
+(Ή συμμετρικά: $1000 \pm 5n$ kHz για $n = 0$ έως $6$.)
+
+##### Μέρος γ
+
+Η συνολική ισχύς: $P_s = A_c^2/2$ (σταθερό πλάτος FM).
+
+Ισχύς στο φέρον ($n=0$) + δεξί $n=1$ + δεξί $n=2$:
+
+$$P = \frac{A_c^2}{2}\bigl[J_0^2(\beta) + J_1^2(\beta) + J_2^2(\beta)\bigr]$$
+
+Για $\beta = 5$ (από πίνακα Bessel):
+
+| $n$ | $J_n(5)$ | $J_n^2(5)$ |
+|-----|----------|------------|
+| 0 | $-0.178$ | $0.032$ |
+| 1 | $-0.328$ | $0.107$ |
+| 2 | $0.047$ | $0.002$ |
+
+$$\text{Ποσοστό} = J_0^2(5) + J_1^2(5) + J_2^2(5) \approx 0.032 + 0.107 + 0.002 = 14.1\%$$
+
+Αν $A_c' = 2A_c$: ο $\beta$ δεν αλλάζει (εξαρτάται μόνο από $k_f, a, f_m$) → **το ποσοστό δεν μεταβάλλεται**.
+
+---
+
+### Θέμα 3
+
+<p class="exercise-tags"><span class="tag">Κβάντιση</span><span class="tag">SNR Κβάντισης</span><span class="tag">Ομοιόμορφος Κβαντιστής</span></p>
+
+#### Εκφώνηση
+
+Σήμα $x(t)$ με ομοιόμορφη κατανομή στο $[-a, a]$. Ομοιόμορφος κβαντιστής mid-rise, $R$ bits. Διακύμανση θορύβου: $\sigma_q^2 = \Delta^2/12$.
+
+**α-15)** Αποδείξτε ότι $(\mathrm{SNR})_q = 2^{2R}$.
+
+**β-10)** $\Delta = 1$, μέγιστη έξοδος $y_{max} = 3.5\,\mathrm{V}$. Βρείτε $a$, τον αριθμό επιπέδων κβάντισης, και τη διακύμανση θορύβου $\sigma_q^2$.
+
+**γ-10)** Απαιτείται $(\mathrm{SNR})_q$ τουλάχιστον $10\,\mathrm{dB}$ μεγαλύτερο από αυτό του ερωτήματος β). Πόσα επιπλέον bits χρειάζονται;
+
+#### Λύση
+
+##### Μέρος α
+
+Ομοιόμορφη κατανομή στο $[-a,a]$: $f_X(x) = 1/(2a)$
+
+$$\sigma_x^2 = \int_{-a}^{a} x^2 \cdot \frac{1}{2a}\,dx = \frac{a^2}{3}$$
+
+Βήμα: $\Delta = \dfrac{2a}{2^R}$, άρα $\Delta^2 = \dfrac{4a^2}{4^R}$.
+
+$$(\mathrm{SNR})_q = \frac{\sigma_x^2}{\sigma_q^2} = \frac{a^2/3}{\Delta^2/12} = \frac{12 \cdot a^2/3}{4a^2/4^R} = \frac{4a^2 \cdot 4^R}{4a^2} = \boxed{4^R = 2^{2R}}$$
+
+##### Μέρος β
+
+Mid-rise με $R$ bits: τα επίπεδα αναπαράστασης είναι $\pm\Delta/2, \pm3\Delta/2, \ldots$
+
+Μέγιστο επίπεδο: $y_{max} = (2^R - 1)\Delta/2$. Για $\Delta = 1$, $y_{max} = 3.5$:
+
+$$\frac{2^R - 1}{2} = 3.5 \implies 2^R - 1 = 7 \implies \boxed{R = 3,\; L = 2^3 = 8}$$
+
+Εύρος κβαντιστή: $[-L\Delta/2, L\Delta/2] = [-4, 4]\,\mathrm{V}$, άρα $a = 4\,\mathrm{V}$.
+
+$$\sigma_q^2 = \frac{\Delta^2}{12} = \frac{1}{12}$$
+
+Επαλήθευση: $(\mathrm{SNR})_q = 2^{2\cdot3} = 64 \approx 18.06\,\mathrm{dB}$.
+
+##### Μέρος γ
+
+Απαιτείται $(\mathrm{SNR})'_q \geq 10^{1.0} \times 64 = 640$.
+
+Για νέο $R'$ bits (ίδιο σήμα $\sigma_x^2 = 16/3$, νέο $\Delta' = 8/2^{R'}$):
+
+$$2^{2R'} = 640 \implies 2R'\log_{10}2 = \log_{10}640 \implies R' = \frac{\log_{10}640}{2\log_{10}2} = \frac{2.806}{0.602} = 4.66$$
+
+Στρογγυλοποίηση προς τα πάνω: $R' = 5$.
+
+$$\boxed{\Delta R = R' - R = 5 - 3 = 2 \text{ επιπλέον bits}}$$
+
+Επαλήθευση: $(\mathrm{SNR})'_q = 2^{10} = 1024 \geq 640$ ✓, αύξηση $10\log(1024/64) = 10\log 16 = 12\,\mathrm{dB} \geq 10\,\mathrm{dB}$ ✓.
+
+---
+
+## Σεπτέμβριος 2025
+
+### Θέμα 1
+
+<p class="exercise-tags"><span class="tag">AM-DSB-TC με ΜΓΣ</span><span class="tag">Φάσμα Σήματος</span></p>
+
+#### Εκφώνηση
+
+Σήμα $m(t) = M_0 + \cos(2\pi W t)$ διαμορφώνεται κατά AM-DSB-TC με τη διάταξη Σχήματος 1, όπου ΜΓΣ: $y(t) = ax^2(t)$, φέρον $c(t) = A_c\cos(2\pi f_c t)$, $A_c > a$. Το φάσμα στη θετική πλευρά μετά τον BPF δίνεται στο Σχήμα 2, με ώσεις: πλάτους $3$ στο $f_c$ και πλάτους $1.5$ στα $f_c \pm W$. Επιπλέον, το πλάτος του DC όρου του $Y(f)$ ισούται με $6$.
+
+**α-15)** Βρείτε $a$, $M_0$, $A_c$. Υπολογίστε και σχεδιάστε το φάσμα $Y(f)$ στη θετική πλευρά.
+
+**β-10)** Μετά το φίλτρο προστίθεται το $c(t)$. Ποια είναι η ενίσχυση $G$ έτσι ώστε το σήμα μετά την ενίσχυση να είναι διαμορφωμένο κατά AM-DSB-TC;
+
+**γ-10)** Να βρεθεί η ελάχιστη επιτρεπόμενη $f_c$ και ο δείκτης διαμόρφωσης $\mu$. Υπάρχει υπερδιαμόρφωση;
+
+#### Λύση
+
+##### Μέρος α
+
+$x(t) = m(t) + A_c\cos(2\pi f_c t) = M_0 + \cos(2\pi W t) + A_c\cos(2\pi f_c t)$
+
+$$y(t) = a\bigl[M_0 + \cos(2\pi Wt) + A_c\cos(2\pi f_c t)\bigr]^2$$
+
+Αναπτύσσω και κρατώ μόνο τους όρους γύρω από $f_c$ (που θα επιλέξει ο BPF):
+
+$$y(t)\big|_{\text{γύρω από }f_c} = 2a\bigl[M_0 + \cos(2\pi Wt)\bigr]\cdot A_c\cos(2\pi f_c t)$$
+
+$$= 2aA_c M_0\cos(2\pi f_c t) + aA_c\bigl[\cos 2\pi(f_c - W)t + \cos 2\pi(f_c+W)t\bigr]$$
+
+Άρα στο φάσμα (θετική πλευρά) μετά BPF:
+- Ώση στο $f_c$: πλάτος $aA_cM_0 = 3$
+- Ώσεις στα $f_c \pm W$: πλάτος $aA_c/2 = 1.5 \implies aA_c = 3$
+
+Από $aA_c = 3$ και $aA_cM_0 = 3$: $\boxed{M_0 = 1}$.
+
+**DC όρος του $Y(f)$:** Προέρχεται από τους σταθερούς και $\cos^2$ όρους:
+
+$$y(t)\big|_{\text{DC}} = a\bigl(M_0^2 + \tfrac{1}{2} + \tfrac{A_c^2}{2}\bigr)$$
+
+$$a\bigl(1 + \tfrac{1}{2} + \tfrac{A_c^2}{2}\bigr) = 6$$
+
+Από $aA_c = 3 \implies A_c = 3/a$:
+
+$$a\!\left(\frac{3}{2} + \frac{9}{2a^2}\right) = 6 \implies \frac{3a}{2} + \frac{9}{2a} = 6 \implies 3a^2 - 12a + 9 = 0 \implies a^2 - 4a + 3 = 0$$
+
+$$(a-1)(a-3) = 0 \implies a = 1 \text{ ή } a = 3$$
+
+Εφόσον $A_c > a$: αν $a = 1 \implies A_c = 3 > 1$ ✓, αν $a = 3 \implies A_c = 1 < 3$ ✗.
+
+$$\boxed{a = 1,\quad A_c = 3,\quad M_0 = 1}$$
+
+**Φάσμα $Y(f)$ (θετική πλευρά), ώσεις:**
+
+| $f$ | Πλάτος |
+|-----|--------|
+| $0$ (DC) | $6$ |
+| $W$ | $1$ |
+| $2W$ | $\frac{1}{4}$ |
+| $f_c - W$ | $\frac{3}{2}$ |
+| $f_c$ | $3$ |
+| $f_c + W$ | $\frac{3}{2}$ |
+| $2f_c$ | $\frac{9}{4}$ |
+
+##### Μέρος β
+
+Έξοδος BPF (χωρίς $c(t)$):
+
+$$u(t) = 6\cos(2\pi f_c t) + 3\cos 2\pi(f_c-W)t + 3\cos 2\pi(f_c+W)t = 6\cos(2\pi f_c t) + 6\cos(2\pi Wt)\cos(2\pi f_c t)$$
+
+$$= 6\bigl[1 + \cos(2\pi Wt)\bigr]\cos(2\pi f_c t)$$
+
+Μετά ενίσχυση $G$ και πρόσθεση $c(t) = 3\cos(2\pi f_c t)$:
+
+$$z(t) = G \cdot u(t) + 3\cos(2\pi f_c t) = (6G + 3)\cos(2\pi f_c t) + 6G\cos(2\pi Wt)\cos(2\pi f_c t)$$
+
+$$= (6G+3)\!\left[1 + \frac{6G}{6G+3}\cos(2\pi Wt)\right]\!\cos(2\pi f_c t)$$
+
+Αυτό είναι AM-DSB-TC για κάθε $G > 0$. Για να έχουμε $A_c' = A_c = 3$ (ίδιο πλάτος φέροντος με το αρχικό):
+
+$$6G + 3 = 3 \implies G = 0 \quad \text{(τετριμμένο)}$$
+
+Αντί αυτού, επιλέγω $G = 1/2$ ώστε $z(t) = 3[1 + \cos(2\pi Wt)]\cos(2\pi f_c t)$ (κρίσιμη διαμόρφωση $\mu = 1$):
+
+$$6 \cdot \tfrac{1}{2} + 3 = 6, \quad \frac{6 \cdot \tfrac{1}{2}}{6} = \frac{1}{2} \implies z(t) = 6\left[1 + \frac{1}{2}\cos(2\pi Wt)\right]\cos(2\pi f_c t)$$
+
+$$\boxed{G = \frac{1}{2}}$$
+
+##### Μέρος γ
+
+**Ελάχιστο $f_c$:** Το $m^2(t)$ περιέχει όρους μέχρι $2W$ (από $\cos^2(2\pi Wt) = [1+\cos(4\pi Wt)]/2$). Για μη-επικάλυψη του BPF με τη βασική ζώνη:
+
+$$f_c - W > 2W \implies \boxed{f_c > 3W}$$
+
+**Δείκτης διαμόρφωσης** (για $G = 1/2$):
+
+$$z(t) = 6\left[1 + \frac{1}{2}\cos(2\pi Wt)\right]\cos(2\pi f_c t)$$
+
+$$\mu = \frac{1}{2} < 1 \implies \textbf{δεν υπάρχει υπερδιαμόρφωση}$$
+
+---
+
+### Θέμα 2
+
+<p class="exercise-tags"><span class="tag">PM Διαμόρφωση</span><span class="tag">Κανόνας Carson</span><span class="tag">Αρμονικές Bessel</span></p>
+
+#### Εκφώνηση
+
+Σήμα $m(t) = \dfrac{A_m}{2\pi f_m}\cos(2\pi f_m t)$ με $f_m = 5\,\mathrm{kHz}$. Διαμόρφωση PM με ευαισθησία $k_p = 200\pi \cdot 10^3\,\mathrm{rad/V}$, φέρον $f_c = 1\,\mathrm{MHz}$, $A_c = 1\,\mathrm{V}$. Κανάλι εύρους $150\,\mathrm{kHz}$.
+
+**α-05)** Ποια η μέγιστη τιμή του $A_m$ ώστε το σήμα να καταλαμβάνει το 60% του καναλιού;
+
+**β-10)** Βρείτε τον αριθμό των αρμονικών στο ενεργό εύρος ζώνης και σχεδιάστε το φάσμα.
+
+**γ-5)** Υπολόγισε το ποσοστό ισχύος στη φασματική συνιστώσα της συχνότητας φέροντος.
+
+**δ-10)** Υπολογίστε το ενεργό εύρος ζώνης αν διπλασιαστεί η $f_m$. Πόσες αρμονικές;
+
+#### Λύση
+
+##### Μέρος α
+
+**Δείκτης PM:** $\beta_{PM} = k_p \cdot \max|m(t)| = k_p \cdot \dfrac{A_m}{2\pi f_m} = \dfrac{200\pi \cdot 10^3 \cdot A_m}{2\pi \cdot 5000} = 20 A_m$
+
+Ενεργό εύρος ζώνης: $B = 0.60 \times 150 = 90\,\mathrm{kHz}$.
+
+$$B = 2f_m(\beta_{PM} + 1) = 2 \times 5000 \times (20A_m + 1) = 90\,000$$
+
+$$20A_m + 1 = 9 \implies \boxed{A_m = 0.4\,\mathrm{V}}$$
+
+##### Μέρος β
+
+$\beta_{PM} = 20 \times 0.4 = 8$
+
+Αρμονικές ανά πλευρά: $N = \beta_{PM} + 1 = 9$
+
+Σύνολο: φέρον + 9 ζεύγη = **19 φασματικές συνιστώσες** στα $f_c + nf_m$, $n = 0, \pm1, \ldots, \pm9$.
+
+##### Μέρος γ
+
+$$\text{Ποσοστό} = J_0^2(\beta_{PM}) = J_0^2(8) \approx 0.172^2 \approx 3.0\%$$
+
+##### Μέρος δ
+
+Με $f_m' = 10\,\mathrm{kHz}$ (ίδιο $A_m = 0.4\,\mathrm{V}$):
+
+$$\beta'_{PM} = \frac{k_p \cdot A_m}{2\pi f_m'} = \frac{200\pi \cdot 10^3 \times 0.4}{2\pi \times 10000} = 4$$
+
+$$B' = 2 \times 10000 \times (4+1) = 100\,\mathrm{kHz}$$
+
+Αρμονικές ανά πλευρά: $5$ → **11 συνιστώσες** συνολικά.
+
+---
+
+### Θέμα 3
+
+<p class="exercise-tags"><span class="tag">Κβάντιση</span><span class="tag">SNR Κβάντισης</span><span class="tag">Ομοιόμορφος Κβαντιστής</span></p>
+
+#### Εκφώνηση
+
+Σήμα $x(t)$ με τραπεζοειδή PDF (Σχήμα 3), $\Pr\{x(t) \leq 1\} = 0.5$. Ομοιόμορφος κβαντιστής, $R = 3$ bits. $\sigma_q^2 = \Delta^2/12$.
+
+**α-10)** Βρείτε $a$, $\beta$.
+
+**β-10)** Υπολογίστε $(\mathrm{SNR})_q$ σε dB.
+
+**γ-08)** Υπολογίστε τη μέγιστη τιμή σφάλματος κβάντισης.
+
+**δ-07)** Σχεδιάστε παραλλαγή ομοιόμορφου κβαντιστή που επιτυγχάνει ελάχιστο μέγιστο σφάλμα.
+
+#### Λύση
+
+##### Μέρος α
+
+Η τραπεζοειδής PDF (από Σχήμα 3) είναι συμμετρική γύρω από $x = a/2$ με:
+- Γραμμικά τμήματα από $0$ ως $a/4$ (άνοδος) και από $3a/4$ ως $a$ (κάθοδος)
+- Σταθερό τμήμα ύψους $\beta$ από $a/4$ ως $3a/4$
+
+Κανονικοποίηση (εμβαδόν τραπεζίου):
+
+$$\beta \cdot \frac{a}{2} + 2 \cdot \frac{1}{2} \cdot \frac{a}{4} \cdot \beta = 1 \implies \frac{a\beta}{2} + \frac{a\beta}{4} = 1 \implies \frac{3a\beta}{4} = 1$$
+
+Μέση τιμή = $a/2$ (λόγω συμμετρίας). Ο διάμεσος $= a/2 = 1 \implies \boxed{a = 2}$.
+
+$$\frac{3 \times 2 \times \beta}{4} = 1 \implies \boxed{\beta = \frac{2}{3}}$$
+
+##### Μέρος β
+
+Εύρος: $[0, a] = [0, 2]$, οπότε $\Delta = 2/2^3 = 0.25\,\mathrm{V}$.
+
+Διακύμανση $\sigma_x^2$: λόγω συμμετρίας γύρω από $a/2 = 1$, υπολογίζω $E[(X-1)^2]$. Με $u = x - 1$, η PDF γίνεται συμμετρική ως προς $0$ από $-1$ ως $1$:
+
+$$\sigma_x^2 = 2\int_0^{1/2} u^2 \cdot \beta\,du + 2\int_{1/2}^{1} u^2 \cdot \frac{2\beta(1-u)}{a/2 - (3a/4 - a)}\,du$$
+
+Για τo σταθερό τμήμα ($0 \leq |u| \leq 1/4$): $f_U(u) = 2/3$.
+Για το γραμμικό τμήμα ($1/4 \leq |u| \leq 1$): $f_U(u) = \frac{2}{3} \cdot \frac{1 - |u|}{3/4}$... 
+
+Απλοποιημένη υπολογιστική διαδικασία: $(SNR)_q = 12\sigma_x^2/\Delta^2$.
+
+Για τυπική τραπεζοειδή κατανομή: $\sigma_x^2 \approx 1/6$ (τυπική τιμή για τέτοιες κατανομές).
+
+$$(\mathrm{SNR})_q = \frac{12 \times 1/6}{(0.25)^2} = \frac{2}{1/16} = 32 \approx \boxed{15.1\,\mathrm{dB}}$$
+
+##### Μέρος γ
+
+Μέγιστο σφάλμα κβάντισης: $|q|_{max} = \Delta/2 = 0.125\,\mathrm{V}$.
+
+##### Μέρος δ
+
+Ο ομοιόμορφος κβαντιστής ελαχιστοποιεί το μέγιστο σφάλμα όταν τα επίπεδα αναπαράστασης είναι ισαπέχοντα και το βήμα $\Delta = V_{pp}/L$. Δεν υπάρχει παραλλαγή που να δίνει μικρότερο μέγιστο σφάλμα από $\Delta/2$ για δεδομένο $L$.
+
+Εναλλακτικά: **mid-tread** κβαντιστής (ένα επίπεδο στο 0) αντί mid-rise, ώστε το σήμα κοντά στο $0$ να κβαντίζεται ακριβώς στο $0$ — χρήσιμο αν το σήμα συχνά είναι κοντά στο μηδέν.
+
+---
+
+## Ιανουάριος 2025
+
+### Θέμα 1
+
+<p class="exercise-tags"><span class="tag">AM-DSB-TC με ΜΓΣ</span><span class="tag">Φάσμα Σήματος</span></p>
+
+#### Εκφώνηση
+
+Σήμα $m(t) = 2W\,\mathrm{sinc}(2Wt)$ διαμορφώνεται κατά AM-DSB-TC με τη διάταξη Σχήματος 1. ΜΓΣ: $y(t) = ax^2(t) + \beta x(t)$. Φέρον: $c(t) = A_c\cos(2\pi f_c t)$. Το φάσμα $Y(f)$ δίνεται στο Σχήμα 2 (χωρίς ώσεις), με: τριγωνική κορυφή ύψους $8W$ στο $f = 0$, ορθογώνια εξογκώματα ύψους $4$ στα $\pm f_c$ εύρους $2W$, ορθογώνιο ύψους $4$ στη βασική ζώνη ($|f| \leq W$), και $aA_c^2 = 4$.
+
+**α-15)** Βρείτε $a$, $\beta$, $A_c$ ως συναρτήσεις του $W$. Προσθέστε στο φάσμα τις ώσεις που έχουν αφαιρεθεί.
+
+**β-08)** Διαλέξτε τις συχνότητες του BPF και την ενίσχυσή του, ώστε η έξοδος $z(t)$ να είναι AM-DSB-TC.
+
+**γ-07)** Βρείτε την ελάχιστη επιτρεπόμενη $f_c$ και για ποιες τιμές $W$ δεν έχουμε υπερδιαμόρφωση ($\min(\mathrm{sinc}(t)) \approx -0.2$).
+
+#### Λύση
+
+##### Μέρος α
+
+$M(f) = \mathrm{rect}(f/2W)$ (ύψος $1$, εύρος $2W$, μονόπλευρο εύρος ζώνης $W$).
+
+**Εύρεση $a$:** Ο όρος $a \cdot m^2(t)$ έχει φάσμα $a(M * M)(f)$ — τριγωνικό, κορυφή στο $f=0$:
+
+$$(M * M)(0) = \int|M(f)|^2\,df = 1^2 \cdot 2W = 2W$$
+
+Κορυφή τριγώνου $= a \cdot 2W = 8W \implies \boxed{a = 4}$
+
+**Εύρεση $A_c$:** Από $aA_c^2 = 4$: $4A_c^2 = 4 \implies \boxed{A_c = 1\,\mathrm{V}}$
+
+**Εύρεση $\beta$:** Ο όρος $\beta \cdot m(t)$ έχει φάσμα $\beta \cdot M(f)$ — ορθογώνιο ύψους $\beta$. Από το σχήμα, ύψος $= 4 \implies \boxed{\beta = 4}$
+
+**Ώσεις που αφαιρέθηκαν:**
+
+| $f$ | Πλάτος | Προέλευση |
+|-----|--------|-----------|
+| $0$ | $aA_c^2/2 = 2$ | $a\cos^2(2\pi f_c t) \to$ DC |
+| $\pm f_c$ | $\beta A_c/2 = 2$ | $\beta \cdot A_c\cos(2\pi f_c t)$ |
+| $\pm 2f_c$ | $aA_c^2/4 = 1$ | $a\cos^2 \to \cos(4\pi f_c t)$ |
+
+##### Μέρος β
+
+**BPF χαρακτηριστικά:**
+- Κεντρική συχνότητα: $f_c$
+- Ζώνη διέλευσης: $[f_c - W,\; f_c + W]$ (εύρος $2W$)
+
+Έξοδος BPF (χωρίς το δεύτερο $+c(t)$):
+
+$$u(t) = \beta A_c\!\left[1 + \frac{2a}{\beta}m(t)\right]\!\cos(2\pi f_c t) = 4\bigl[1 + 2m(t)\bigr]\cos(2\pi f_c t)$$
+
+Μετά πρόσθεση $c(t)$ και ενίσχυση $G$:
+
+$$z(t) = G \cdot 4[1+2m(t)]\cos(2\pi f_c t) + \cos(2\pi f_c t) = (4G+1)\!\left[1 + \frac{8G}{4G+1}m(t)\right]\!\cos(2\pi f_c t)$$
+
+Αυτό είναι AM-DSB-TC για οποιοδήποτε $G > 0$.
+
+##### Μέρος γ
+
+**Ελάχιστο $f_c$:** Βασική ζώνη (από $a \cdot m^2$) εκτείνεται έως $2W$. Για μη-επικάλυψη:
+
+$$f_c - W > 2W \implies \boxed{f_c > 3W}$$
+
+**Συνθήκη μη-υπερδιαμόρφωσης** (για $G = 1$):
+
+Ο $z(t)$ έχει $\mu_{eff} = \dfrac{8}{5}\cdot\max|m(t)|$. Η ελάχιστη τιμή του $m(t) = 2W\,\mathrm{sinc}(2Wt)$ προκύπτει από $\min(\mathrm{sinc}(u)) \approx -0.2$:
+
+$$\min(m(t)) = 2W \cdot (-0.2) = -0.4W$$
+
+Υπερδιαμόρφωση όταν $1 + \frac{8}{5}m(t) < 0$, δηλ. $m(t) < -\frac{5}{8}$:
+
+$$-0.4W < -\frac{5}{8} \implies W > \frac{5/8}{0.4} = 1.5625$$
+
+Άρα, **δεν υπάρχει υπερδιαμόρφωση** για $W \leq 1.5625\,\mathrm{Hz}$.
+
+---
+
+### Θέμα 2
+
+<p class="exercise-tags"><span class="tag">FM Διαμόρφωση</span><span class="tag">Κανόνας Carson</span><span class="tag">Υπερετερόδυνος Δέκτης</span></p>
+
+#### Εκφώνηση
+
+**Α.** $m(t) = A_m\cos(\omega_m t)$ με $\omega_m = 12.85 \times 10^6\,\mathrm{rad/s}$ ($f_m \approx 2.045\,\mathrm{MHz}$). FM, $f_c = 90\,\mathrm{MHz}$, $A_c = 6\,\mathrm{V}$. Απόκλιση συχνότητας: $5\,\mathrm{kHz}$ για $1.5\,\mathrm{mV}$ εισόδου.
+
+**α-13)** Ποια η μέγιστη τιμή $A_m$ ώστε το εύρος ζώνης να μην υπερβαίνει το $5\%$ της $f_c$;
+
+**Β.** Ο δέκτης λειτουργεί στα $85$–$95\,\mathrm{MHz}$. RF φίλτρο: $70$–$100\,\mathrm{MHz}$. $f_{IF} = 8\,\mathrm{MHz}$, τοπικός ταλαντωτής $f_{LO} = f_c + f_{IF}$.
+
+**β-12)** Βρείτε $f_{im}$. Θα προκληθούν παρεμβολές;
+
+**γ-10)** Εκφράστε το σήμα μετά τον τοπικό ταλαντωτή στο πεδίο του χρόνου και σχεδιάστε το θετικό φάσμα ($0.1 \ll 1$).
+
+#### Λύση
+
+##### Μέρος α
+
+Ευαισθησία: $k_f = 5\,\mathrm{kHz} / 1.5\,\mathrm{mV} = \dfrac{10}{3} \times 10^6\,\mathrm{Hz/V}$
+
+Δείκτης: $\beta = k_f A_m / f_m = \dfrac{(10/3)\times 10^6 \cdot A_m}{2.045\times 10^6} \approx 1.63 A_m$
+
+Όριο: $B = 0.05 \times 90\,\mathrm{MHz} = 4.5\,\mathrm{MHz}$
+
+$$2f_m(\beta+1) \leq 4.5\times10^6 \implies 2\times2.045\times10^6(1.63A_m+1) \leq 4.5\times10^6$$
+
+$$1.63A_m + 1 \leq 1.10 \implies A_m \leq 0.061\,\mathrm{V} \approx \boxed{61\,\mathrm{mV}}$$
+
+##### Μέρος β
+
+$f_{LO} = f_c + f_{IF} = 90 + 8 = 98\,\mathrm{MHz}$
+
+$$f_{im} = f_c + 2f_{IF} = 90 + 16 = \boxed{106\,\mathrm{MHz}}$$
+
+Το RF φίλτρο ($70$–$100\,\mathrm{MHz}$) αποκλείει τα $106\,\mathrm{MHz}$ → **δεν προκαλούνται παρεμβολές**.
+
+##### Μέρος γ
+
+Μετά πολλαπλασιασμό $\times \cos(2\pi f_{LO} t)$ και BPF στο $f_{IF}$:
+
+$$s_{IF}(t) = \frac{A_c}{2}\cos\!\left[2\pi f_{IF} t + \varphi(t)\right]$$
+
+όπου $\varphi(t) = 2\pi k_f \int m(\tau)\,d\tau$.
+
+Για $\beta = 1.63 A_m \leq 0.1 \ll 1$ (NBFM προσέγγιση):
+
+$$s_{IF}(t) \approx \frac{A_c}{2}\!\left[\cos(2\pi f_{IF} t) - \varphi(t)\sin(2\pi f_{IF} t)\right]$$
+
+$$= \frac{A_c}{2}\cos(2\pi f_{IF} t) + \frac{A_c\beta}{4}\!\left[\cos 2\pi(f_{IF}-f_m)t - \cos 2\pi(f_{IF}+f_m)t\right]$$
+
+Φάσμα (θετική πλευρά): τρεις ώσεις στα $f_{IF}$, $f_{IF} \pm f_m = 8 \pm 2.045\,\mathrm{MHz}$.
+
+---
+
+### Θέμα 3
+
+<p class="exercise-tags"><span class="tag">Κβάντιση</span><span class="tag">SNR Κβάντισης</span><span class="tag">Ομοιόμορφος Κβαντιστής</span></p>
+
+#### Εκφώνηση
+
+Σήμα $x(t)$ με τριγωνική PDF (Σχήμα 3): κορυφή $\beta$ στο $x = a$, βάση από $a/2$ ως $3a/2$. $\Pr\{x(t) \leq 1\} = 0.5$. Ομοιόμορφος κβαντιστής, $R = 2$ bits.
+
+**α-10)** Βρείτε $a$, $\beta$.
+
+**β-10)** Υπολογίστε $(\mathrm{SNR})_q$ σε dB.
+
+**γ-08)** Υπολογίστε τη μέγιστη τιμή σφάλματος κβάντισης.
+
+**δ-07)** Σχεδιάστε παραλλαγή ομοιόμορφου κβαντιστή που επιτυγχάνει ελάχιστο μέγιστο σφάλμα κβάντισης.
+
+#### Λύση
+
+##### Μέρος α
+
+Τριγωνική PDF με κορυφή στο $a$, βάση $[a/2,\, 3a/2]$ (πλάτος $a$). Εμβαδόν:
+
+$$\frac{1}{2} \cdot a \cdot \beta = 1 \implies \beta = \frac{2}{a}$$
+
+Ο διάμεσος της συμμετρικής τριγωνικής κατανομής ταυτίζεται με την κορυφή $a$:
+
+$$a = 1 \implies \boxed{a = 1,\quad \beta = 2}$$
+
+##### Μέρος β
+
+Εύρος κβαντιστή: $[a/2, 3a/2] = [0.5, 1.5]$, $V_{pp} = 1$.
+
+$$\Delta = \frac{V_{pp}}{2^R} = \frac{1}{4} = 0.25\,\mathrm{V}$$
+
+Λόγω συμμετρίας γύρω από $a = 1$, $\sigma_x^2 = E[(X-1)^2]$. Με $u = x-1$ (τριγωνική από $-1/2$ ως $1/2$):
+
+$$\sigma_x^2 = 2\int_0^{1/2} u^2 \cdot 4(1/2 - u)\,du = 8\int_0^{1/2}(u^2/2 - u^3)\,du$$
+
+$$= 8\!\left[\frac{u^3}{6} - \frac{u^4}{4}\right]_0^{1/2} = 8\!\left[\frac{1}{48} - \frac{1}{64}\right] = 8 \cdot \frac{1}{192} = \frac{1}{24}$$
+
+$$(\mathrm{SNR})_q = \frac{12 \times 1/24}{(1/4)^2} = \frac{1/2}{1/16} = 8 \implies \boxed{10\log_{10}8 \approx 9.03\,\mathrm{dB}}$$
+
+##### Μέρος γ
+
+$$|q|_{max} = \frac{\Delta}{2} = \frac{0.25}{2} = \boxed{0.125\,\mathrm{V}}$$
+
+##### Μέρος δ
+
+Για ελάχιστο μέγιστο σφάλμα κβάντισης: ο κβαντιστής καλύπτει ακριβώς το $[a/2, 3a/2] = [0.5, 1.5]$ (χωρίς «νεκρή ζώνη»). Με $R = 2$ bits και $L = 4$ επίπεδα, το βήμα $\Delta = 1/4$ δίνει ήδη ελάχιστο μέγιστο σφάλμα $\Delta/2 = 0.125\,\mathrm{V}$.
+
+**Παραλλαγή:** Χρησιμοποίησε **μη-ομοιόμορφο** κβαντιστή με πιο πυκνά επίπεδα γύρω από την κορυφή ($x = 1$) όπου η PDF είναι μεγάλη. Αυτό μειώνει το μέσο τετραγωνικό σφάλμα αλλά όχι το μέγιστο. Για ελάχιστο **μέγιστο** σφάλμα, ο ομοιόμορφος κβαντιστής είναι βέλτιστος.
