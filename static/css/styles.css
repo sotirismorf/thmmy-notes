@@ -208,6 +208,21 @@ ul:has(input[type="checkbox"]):hover li:has(input[type="checkbox"]:checked) {
   font-weight: 600;
 }
 
+/* Source reference for each quiz answer (where it is in the slides).
+   Hidden until the list is hovered/tapped — revealed together with the
+   correct answer. */
+.answer-source {
+  display: none;
+  margin: 0.15rem 0 0;
+  font-size: 0.82rem;
+  opacity: 0.7;
+  font-style: italic;
+}
+
+ul:has(input[type="checkbox"]):hover + .answer-source {
+  display: block;
+}
+
 /* Page layout with TOC sidebar */
 
 .page-layout {

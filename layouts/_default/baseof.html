@@ -18,6 +18,13 @@
     };
   </script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+
+<body>
+  {{ block "main" . }}{{ end }}
+  {{/* Loaded after the content block so the `hasMermaid` flag, set by the
+       mermaid code-block render hook while rendering .Content, is visible.
+       Placing this in <head> would run before .Content renders → never loads. */}}
   {{ if .Store.Get "hasMermaid" }}
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
@@ -25,10 +32,6 @@
     mermaid.initialize({ startOnLoad: true, theme: dark ? 'dark' : 'default' });
   </script>
   {{ end }}
-</head>
-
-<body>
-  {{ block "main" . }}{{ end }}
   <script>
     // Wrap each "Εκφώνηση" heading + its following content (until the next
     // heading or <hr>) in a .exercise-statement box, for visual framing.

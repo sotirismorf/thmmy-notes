@@ -1012,3 +1012,271 @@ $$|q|_{max} = \frac{\Delta}{2} = \frac{0.25}{2} = \boxed{0.125\,\mathrm{V}}$$
 Για ελάχιστο μέγιστο σφάλμα κβάντισης: ο κβαντιστής καλύπτει ακριβώς το $[a/2, 3a/2] = [0.5, 1.5]$ (χωρίς «νεκρή ζώνη»). Με $R = 2$ bits και $L = 4$ επίπεδα, το βήμα $\Delta = 1/4$ δίνει ήδη ελάχιστο μέγιστο σφάλμα $\Delta/2 = 0.125\,\mathrm{V}$.
 
 **Παραλλαγή:** Χρησιμοποίησε **μη-ομοιόμορφο** κβαντιστή με πιο πυκνά επίπεδα γύρω από την κορυφή ($x = 1$) όπου η PDF είναι μεγάλη. Αυτό μειώνει το μέσο τετραγωνικό σφάλμα αλλά όχι το μέγιστο. Για ελάχιστο **μέγιστο** σφάλμα, ο ομοιόμορφος κβαντιστής είναι βέλτιστος.
+
+---
+
+## Ιούνιος 2022
+
+### Θέμα 2
+
+<p class="exercise-tags"><span class="tag">AM-DSB-TC με ΜΓΣ</span><span class="tag">Δείκτης Διαμόρφωσης</span><span class="tag">Φάσμα Σήματος</span></p>
+
+#### Εκφώνηση
+
+Το σήμα πληροφορίας $m(t) = a\cos(2\pi f_0 t)$ διαμορφώνεται κατά DSB-AM-TC με φέρον πλάτους $A_c$ και συχνότητας $f_c$.
+
+**α-5)** Ο λόγος της ισχύος του μηνύματος πληροφορίας προς την ισχύ του φέροντος ισούται με $-1.9382\,\mathrm{dB}$. Να υπολογιστεί ο δείκτης διαμόρφωσης και ο συντελεστής ισχύος.
+
+**β-5)** Το πλάτος του φέροντος μεταβάλλεται με τέτοιο τρόπο, ώστε το διαμορφωμένο σήμα να μπορεί οριακά να αποδιαμορφωθεί με την χρήση ενός ανιχνευτή περιβάλλουσας. Να υπολογιστεί η σχέση μεταξύ της νέας ισχύος του φέροντος και αυτής του (α) ερωτήματος.
+
+Για την αποδιαμόρφωση του διαμορφωμένου κατά DSB-AM-TC σήματος $x(t)$ χρησιμοποιείται η διάταξη του Σχήματος 1, όπου Μ.Γ.Σ. είναι ένα μη γραμμικό στοιχείο με χαρακτηριστική εξόδου-εισόδου $y(t) = x^2(t)$.
+
+```mermaid
+flowchart LR
+    in["x(t)"] --> mgs["Μ.Γ.Σ"]
+    mgs -->|"y(t) = x²(t)"| filt["ΦΙΛΤΡΟ"]
+    filt --> out[" "]
+```
+
+<p style="text-align:center; font-style:italic; font-size:0.9em;">Σχήμα 1: Διάταξη αποδιαμορφωτή.</p>
+
+**γ-15)** Να υπολογιστεί αναλυτικά και να σχεδιασθεί το φάσμα $Y(f)$ στην έξοδο του Μ.Γ.Σ..
+
+**δ-5)** Να προσδιοριστεί το φίλτρο και τα χαρακτηριστικά του, ώστε η αποδιαμόρφωση να είναι επιτυχής.
+
+#### Λύση
+
+##### Μέρος α
+
+Το διαμορφωμένο κατά DSB-AM-TC σήμα γράφεται
+
+$$x(t) = \bigl[A_c + m(t)\bigr]\cos(2\pi f_c t) = A_c\bigl[1 + \mu\cos(2\pi f_0 t)\bigr]\cos(2\pi f_c t), \qquad \mu = \frac{a}{A_c}.$$
+
+**Λόγος ισχύων.** Ισχύς μηνύματος $P_m = \dfrac{a^2}{2}$, ισχύς φέροντος $P_c = \dfrac{A_c^2}{2}$:
+
+$$\frac{P_m}{P_c} = \frac{a^2/2}{A_c^2/2} = \frac{a^2}{A_c^2} = \mu^2.$$
+
+Από τα $-1.9382\,\mathrm{dB}$:
+
+$$\mu^2 = 10^{-1.9382/10} = 10^{-0.19382} = 0.64 \implies \boxed{\mu = 0.8}.$$
+
+**Συντελεστής ισχύος** (απόδοση — ισχύς πλευρικών προς συνολική):
+
+$$\eta = \frac{\mu^2/2}{1 + \mu^2/2} = \frac{0.32}{1.32} = 0.2424 \implies \boxed{\eta \approx 24.2\%}.$$
+
+##### Μέρος β
+
+Για να αποδιαμορφώνεται **οριακά** με ανιχνευτή περιβάλλουσας απαιτείται κρίσιμη διαμόρφωση $\mu' = 1$, δηλαδή το νέο πλάτος φέροντος γίνεται $A_c' = a$.
+
+Από το (α) ήταν $A_c = \dfrac{a}{\mu} = \dfrac{a}{0.8} = 1.25\,a$. Άρα
+
+$$\frac{P_c'}{P_c} = \left(\frac{A_c'}{A_c}\right)^2 = \left(\frac{a}{a/\mu}\right)^2 = \mu^2 = 0.64.$$
+
+$$\boxed{P_c' = 0.64\,P_c}$$
+
+Δηλαδή η νέα ισχύς φέροντος είναι μικρότερη κατά τον ίδιο παράγοντα $\mu^2$ — ακριβώς $-1.9382\,\mathrm{dB}$ σε σχέση με το (α). (Μειώνουμε το «πλεονάζον» φέρον ώστε από $\mu = 0.8$ να φτάσουμε στο όριο $\mu = 1$.)
+
+##### Μέρος γ
+
+Στην είσοδο του Μ.Γ.Σ. εφαρμόζεται το διαμορφωμένο σήμα $x(t) = A_c[1 + \mu\cos(2\pi f_0 t)]\cos(2\pi f_c t)$. Με $y(t) = x^2(t)$:
+
+$$y(t) = A_c^2\bigl[1 + \mu\cos(2\pi f_0 t)\bigr]^2\cos^2(2\pi f_c t).$$
+
+Αναπτύσσω τον περιβάλλοντα όρο:
+
+$$\bigl[1 + \mu\cos(2\pi f_0 t)\bigr]^2 = \underbrace{\left(1 + \frac{\mu^2}{2}\right)}_{\text{DC}} + \underbrace{2\mu\cos(2\pi f_0 t)}_{\text{στο }f_0} + \underbrace{\frac{\mu^2}{2}\cos(4\pi f_0 t)}_{\text{στο }2f_0}$$
+
+και με $\cos^2(2\pi f_c t) = \tfrac{1}{2}\bigl[1 + \cos(4\pi f_c t)\bigr]$:
+
+$$y(t) = \frac{A_c^2}{2}\Bigl[\bigl(1+\tfrac{\mu^2}{2}\bigr) + 2\mu\cos(2\pi f_0 t) + \tfrac{\mu^2}{2}\cos(4\pi f_0 t)\Bigr]\bigl[1 + \cos(4\pi f_c t)\bigr].$$
+
+Δηλαδή κάθε όρος του περιβάλλοντος εμφανίζεται **δύο φορές**: μία στη **βασική ζώνη** (πολλαπλασιασμός με το $1$) και μία **γύρω από το $2f_c$** (πολλαπλασιασμός με το $\cos 4\pi f_c t$). Το φάσμα αποτελείται μόνο από ώσεις:
+
+| $f$ ($>0$) | Πλάτος ώσης | Προέλευση |
+|-----------|-------------|-----------|
+| $0$ (DC) | $\frac{A_c^2}{2}\bigl(1+\frac{\mu^2}{2}\bigr)$ | σταθερός όρος |
+| $f_0$ | $A_c^2\mu$ | **ανακτημένο μήνυμα** |
+| $2f_0$ | $\frac{A_c^2\mu^2}{4}$ | 2η αρμονική (παραμόρφωση) |
+| $2f_c - 2f_0$ | $\frac{A_c^2\mu^2}{8}$ | γύρω από $2f_c$ |
+| $2f_c - f_0$ | $\frac{A_c^2\mu}{2}$ | γύρω από $2f_c$ |
+| $2f_c$ | $\frac{A_c^2}{2}\bigl(1+\frac{\mu^2}{2}\bigr)$ | γύρω από $2f_c$ |
+| $2f_c + f_0$ | $\frac{A_c^2\mu}{2}$ | γύρω από $2f_c$ |
+| $2f_c + 2f_0$ | $\frac{A_c^2\mu^2}{8}$ | γύρω από $2f_c$ |
+
+Ο όρος στο $f_0$ έχει πλάτος $A_c^2\mu \propto a$, δηλαδή είναι αντίγραφο του μηνύματος $m(t)$ — αυτό ανακτά ο τετραγωνικός αποδιαμορφωτής.
+
+{{< plotly >}}
+var f0 = 1, fc = 7, mu = 1;        // μ = 1 (οριακή περίπτωση του β), A_c² = 1
+var twofc = 2 * fc;
+
+// [f, ύψος, ετικέτα, highlight?]
+var lines = [
+  [0,            0.5 * (1 + mu*mu/2), 'DC', false],
+  [f0,           mu,                  'f₀', true],
+  [2*f0,         mu*mu/4,             '2f₀', false],
+  [twofc - 2*f0, mu*mu/8,             '', false],
+  [twofc - f0,   mu/2,                '', false],
+  [twofc,        0.5 * (1 + mu*mu/2), '2f_c', false],
+  [twofc + f0,   mu/2,                '', false],
+  [twofc + 2*f0, mu*mu/8,             '', false],
+];
+
+var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+var fontColor = dark ? '#e8e8ed' : '#1c1c1e';
+var zeroColor = dark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)';
+
+var data = lines.map(function(d) {
+  var col = d[3] ? '#22c55e' : '#3b82f6';
+  return {x: [d[0], d[0]], y: [0, d[1]], type: 'scatter',
+    mode: 'lines+markers+text', line: {color: col, width: d[3] ? 3 : 2},
+    marker: {symbol: 'triangle-up', size: d[3] ? 10 : 7, color: col},
+    text: ['', d[2]], textposition: 'top center',
+    textfont: {size: 10, color: col}, showlegend: false, hoverinfo: 'skip'};
+});
+
+// ζώνη διέλευσης BPF γύρω από f0
+data.unshift({x: [0.5*f0, 0.5*f0, 1.5*f0, 1.5*f0], y: [0, 1.15, 1.15, 0],
+  type: 'scatter', mode: 'lines', line: {width: 0}, fill: 'toself',
+  fillcolor: 'rgba(34,197,94,0.10)', showlegend: false, hoverinfo: 'skip'});
+
+var layout = {
+  xaxis: {title: {text: 'f', font: {color: fontColor}},
+          tickvals: [0, f0, 2*f0, twofc - 2*f0, twofc, twofc + 2*f0],
+          ticktext: ['0', 'f₀', '2f₀', '2f_c−2f₀', '2f_c', '2f_c+2f₀'],
+          range: [-0.6, twofc + 1.2], zeroline: true, zerolinecolor: zeroColor,
+          showgrid: false, color: fontColor},
+  yaxis: {showticklabels: false, showgrid: false, range: [0, 1.25],
+          zeroline: true, zerolinecolor: zeroColor, color: fontColor},
+  annotations: [{text: 'BPF', x: f0, y: 1.18, showarrow: false,
+    font: {size: 10, color: '#22c55e'}}],
+  margin: {t: 30, b: 50, l: 10, r: 10},
+  height: 270,
+  paper_bgcolor: 'rgba(0,0,0,0)',
+  plot_bgcolor:  'rgba(0,0,0,0)',
+  font: {color: fontColor},
+};
+
+Plotly.newPlot(gd, data, layout, {responsive: true, displayModeBar: false});
+{{< /plotly >}}
+
+##### Μέρος δ
+
+Ο χρήσιμος όρος (το αντίγραφο του μηνύματος) βρίσκεται στη συχνότητα $f_0$. Για επιτυχή αποδιαμόρφωση το φίλτρο πρέπει να **απομονώσει μόνο την ώση στο $f_0$**, απορρίπτοντας:
+
+- τη συνεχή συνιστώσα (DC) στο $0$,
+- την 2η αρμονική στο $2f_0$ (παραμόρφωση που εισάγει η τετραγωνική χαρακτηριστική),
+- ολόκληρη τη συστάδα γύρω από το $2f_c$.
+
+Επομένως χρειάζεται **ζωνοπερατό φίλτρο (BPF)** με:
+
+- **κεντρική συχνότητα** $f_0$,
+- **εύρος ζώνης** στενό, $f_0 - f_0 < \ldots < f_0 + f_0$ — αρκεί $B < f_0$ ώστε να μένει εκτός το DC και ο όρος $2f_0$ (π.χ. διέλευση γύρω στο $\tfrac{f_0}{2} \to \tfrac{3f_0}{2}$).
+
+$$\boxed{H(f) = \mathrm{rect}\!\left(\frac{f - f_0}{B}\right) + \mathrm{rect}\!\left(\frac{f + f_0}{B}\right), \quad B < f_0}$$
+
+Στην έξοδο μένει $A_c^2\mu\cos(2\pi f_0 t) \propto m(t)$ — πιστή ανάκτηση του μηνύματος. (Εφόσον $f_c \gg f_0$, η συστάδα γύρω από το $2f_c$ είναι πολύ μακριά και απορρίπτεται άνετα.)
+
+---
+
+### Θέμα 3
+
+<p class="exercise-tags"><span class="tag">FM Διαμόρφωση</span><span class="tag">Κανόνας Carson</span><span class="tag">Αρμονικές Bessel</span></p>
+
+#### Εκφώνηση
+
+Έστω σήμα πληροφορίας $m(t) = a\cos(2\pi\cdot 6\times 10^3\, t)$, το οποίο διαμορφώνεται κατά FM με ευαισθησία συχνότητας $96\,\mathrm{kHz/V}$, από φέρον συχνότητας $f_c = 1\,\mathrm{MHz}$ και πλάτους $A_c$. Το διαμορφωμένο σήμα μεταδίδεται από κανάλι εύρους ζώνης $75\,\mathrm{kHz}$.
+
+**α-8)** Να βρεθεί το πλάτος $a$ του σήματος πληροφορίας ώστε το διαμορφωμένο σήμα να καλύπτει το $80\%$ του διαθέσιμου εύρους ζώνης.
+
+**β-7)** Να βρεθεί ο αριθμός των αρμονικών στο ενεργό εύρος ζώνης, σύμφωνα με το ερώτημα α), και να προσδιορισθεί η συχνότητά τους.
+
+**γ-10)** Να υπολογιστεί το ποσοστό της συνολικής ισχύος του διαμορφωμένου σήματος που εμπεριέχεται στη συνιστώσα της συχνότητας φέροντος και στις δύο συνιστώσες εκ δεξιών αυτής. Πως μεταβάλλεται το προηγούμενο ποσοστό εάν επιλεχθεί νέο πλάτος φέροντος που ισούται με $A_c' = 2A_c$;
+
+#### Λύση
+
+##### Μέρος α
+
+Συχνότητα μηνύματος: $f_m = 6\,\mathrm{kHz}$. Ευαισθησία $k_f = 96\,\mathrm{kHz/V}$.
+
+Ενεργό εύρος ζώνης (80% του καναλιού): $B = 0.80\times 75 = 60\,\mathrm{kHz}$.
+
+Δείκτης διαμόρφωσης: $\beta = \dfrac{k_f\,a}{f_m} = \dfrac{96\,a}{6} = 16a$.
+
+Κανόνας Carson:
+
+$$B = 2f_m(\beta + 1) = 2\cdot 6\cdot(\beta + 1) = 60\,\mathrm{kHz} \implies \beta + 1 = 5 \implies \beta = 4.$$
+
+$$16a = 4 \implies \boxed{a = 0.25\,\mathrm{V}}$$
+
+##### Μέρος β
+
+Με $\beta = 4$, σύμφωνα με τον κανόνα Carson, σημαντικές αρμονικές υπάρχουν μέχρι $n = \beta + 1 = 5$ από κάθε πλευρά.
+
+Σύνολο: φέρον + $5$ ζεύγη = **$11$ φασματικές συνιστώσες**, στις συχνότητες $f_c + n f_m$ για $n = 0, \pm1, \ldots, \pm5$:
+
+$$\underbrace{970,\ 976,\ 982,\ 988,\ 994}_{n=-5\ldots-1},\ \underbrace{1000}_{f_c},\ \underbrace{1006,\ 1012,\ 1018,\ 1024,\ 1030}_{n=+1\ldots+5}\ \mathrm{kHz}$$
+
+(ισοδύναμα $1000 \pm 6n\,\mathrm{kHz}$ για $n = 0$ έως $5$).
+
+{{< plotly >}}
+var fc = 1000, fm = 6;     // kHz
+// |J_n(4)|
+var J = {0: 0.3971, 1: 0.0660, 2: 0.3641, 3: 0.4302, 4: 0.2811, 5: 0.1321};
+
+var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+var fontColor = dark ? '#e8e8ed' : '#1c1c1e';
+var zeroColor = dark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)';
+
+var data = [];
+for (var n = -5; n <= 5; n++) {
+  var f = fc + n * fm;
+  var h = J[Math.abs(n)];
+  var hot = (n === 0 || n === 1 || n === 2);   // οι 3 συνιστώσες του ερωτήματος γ
+  var col = hot ? '#22c55e' : '#3b82f6';
+  data.push({x: [f, f], y: [0, h], type: 'scatter', mode: 'lines+markers',
+    line: {color: col, width: hot ? 3 : 2},
+    marker: {symbol: 'triangle-up', size: hot ? 9 : 6, color: col},
+    showlegend: false, hoverinfo: 'skip'});
+}
+
+var layout = {
+  xaxis: {title: {text: 'f (kHz)', font: {color: fontColor}},
+          tickvals: [970, 982, 994, 1000, 1006, 1018, 1030],
+          range: [965, 1035], zeroline: false, showgrid: false, color: fontColor},
+  yaxis: {showticklabels: false, showgrid: false, range: [0, 0.5],
+          zeroline: true, zerolinecolor: zeroColor, color: fontColor},
+  annotations: [
+    {text: 'f_c (J₀)', x: 1000, y: J[0], ax: -25, ay: -25, showarrow: true,
+     arrowhead: 2, arrowcolor: '#22c55e', font: {size: 10, color: '#22c55e'}},
+    {text: 'J₁, J₂ (δεξιά)', x: 1009, y: J[2], ax: 35, ay: -30, showarrow: true,
+     arrowhead: 2, arrowcolor: '#22c55e', font: {size: 10, color: '#22c55e'}},
+  ],
+  margin: {t: 30, b: 50, l: 10, r: 10},
+  height: 260,
+  paper_bgcolor: 'rgba(0,0,0,0)',
+  plot_bgcolor:  'rgba(0,0,0,0)',
+  font: {color: fontColor},
+};
+
+Plotly.newPlot(gd, data, layout, {responsive: true, displayModeBar: false});
+{{< /plotly >}}
+
+##### Μέρος γ
+
+Η συνολική ισχύς ενός FM σήματος είναι σταθερή (σταθερό πλάτος): $P_s = \dfrac{A_c^2}{2}$.
+
+Οι ζητούμενες συνιστώσες είναι: το φέρον ($n=0$) και οι **δύο εκ δεξιών** ($n=1$ και $n=2$):
+
+$$P = \frac{A_c^2}{2}\bigl[J_0^2(\beta) + J_1^2(\beta) + J_2^2(\beta)\bigr].$$
+
+Για $\beta = 4$ (από πίνακα Bessel):
+
+| $n$ | $J_n(4)$ | $J_n^2(4)$ |
+|-----|----------|------------|
+| $0$ | $-0.3971$ | $0.1577$ |
+| $1$ | $-0.0660$ | $0.0044$ |
+| $2$ | $0.3641$ | $0.1326$ |
+
+$$\text{Ποσοστό} = \frac{P}{P_s} = J_0^2(4) + J_1^2(4) + J_2^2(4) \approx 0.1577 + 0.0044 + 0.1326 = \boxed{0.295 = 29.5\%}$$
+
+**Αν $A_c' = 2A_c$:** Ο δείκτης $\beta = \dfrac{k_f a}{f_m}$ δεν εξαρτάται από το πλάτος του φέροντος, άρα **παραμένει $\beta = 4$** και οι συντελεστές $J_n(\beta)$ δεν αλλάζουν. Επομένως το **ποσοστό δεν μεταβάλλεται** (μένει $29.5\%$). (Η απόλυτη ισχύς τετραπλασιάζεται, $P_s' = \tfrac{(2A_c)^2}{2} = 4P_s$, αλλά ο λόγος είναι ίδιος.)

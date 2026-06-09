@@ -52,6 +52,7 @@ a { color: #000; text-decoration: none; }
 /* In print, always reveal the correct answer (no hover available). */
 input[type="checkbox"] { display: inline-block; }
 li:has(input[type="checkbox"]:checked) { font-weight: 600; }
+.answer-source { display: block; font-style: italic; opacity: 0.8; }
 
 /* Keep blocks intact across page breaks */
 pre, table, figure { page-break-inside: avoid; }

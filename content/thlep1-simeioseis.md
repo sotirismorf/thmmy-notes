@@ -271,6 +271,62 @@ $$\eta = \frac{P_m}{A_c^2 + P_m} = \frac{\mu^2}{\mu^2 + 2}$$
 
 **Αποδοτικότητα**: τι ποσοστό της συνολικής ισχύος είναι χρήσιμο. Για $\mu = 1$ (μέγιστο χωρίς υπερδιαμόρφωση): $\eta = 1/3 = 33\%$ — τα $2/3$ της ισχύος είναι σπατάλη στο φέρον.
 
+{{< plotly >}}
+var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+var fontColor = dark ? '#e8e8ed' : '#1c1c1e';
+var zeroColor = dark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)';
+var gridColor = dark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)';
+
+// αριστερά: απόδοση η(μ) = μ²/(μ²+2), σε %
+var mu = [], eta = [];
+for (var i = 0; i <= 100; i++) { var m = i / 100; mu.push(m); eta.push(100 * m * m / (m * m + 2)); }
+
+// δεξιά: κατανομή ισχύος (φέρον vs πλευρικές) για μ = 0.3, 0.5, 1
+var cats = ['μ=0.3', 'μ=0.5', 'μ=1'];
+var useful = [0.3, 0.5, 1.0].map(function (m) { return 100 * m * m / (m * m + 2); });
+var wasted = useful.map(function (u) { return 100 - u; });
+
+var data = [
+  {x: mu, y: eta, xaxis: 'x', yaxis: 'y', type: 'scatter', mode: 'lines',
+   line: {color: '#22c55e', width: 2.5}, showlegend: false, hoverinfo: 'skip'},
+  {x: cats, y: wasted, xaxis: 'x2', yaxis: 'y2', type: 'bar', name: 'φέρον (σπατάλη)',
+   marker: {color: 'rgba(249,115,22,0.85)'}, hoverinfo: 'skip'},
+  {x: cats, y: useful, xaxis: 'x2', yaxis: 'y2', type: 'bar', name: 'πλευρικές (χρήσιμη)',
+   marker: {color: 'rgba(34,197,94,0.85)'}, hoverinfo: 'skip'},
+];
+
+var layout = {
+  barmode: 'stack',
+  xaxis:  {domain: [0, 0.44], title: {text: 'μ', font: {color: fontColor}}, range: [0, 1],
+           dtick: 0.25, showgrid: true, gridcolor: gridColor, zeroline: false, color: fontColor},
+  yaxis:  {anchor: 'x', title: {text: 'απόδοση η (%)', font: {color: fontColor}},
+           range: [0, 40], showgrid: true, gridcolor: gridColor, zeroline: true,
+           zerolinecolor: zeroColor, color: fontColor},
+  xaxis2: {domain: [0.58, 1], color: fontColor},
+  yaxis2: {anchor: 'x2', title: {text: '% συνολικής ισχύος', font: {color: fontColor}},
+           range: [0, 100], gridcolor: gridColor, color: fontColor},
+  annotations: [
+    {text: 'μ=1 → 33%', x: 1, y: 33.3, xref: 'x', yref: 'y', showarrow: true,
+     arrowhead: 2, ax: -45, ay: -8, font: {size: 10, color: '#22c55e'}, arrowcolor: '#22c55e'},
+    {text: '<b>Απόδοση vs μ</b>', x: 0.20, y: 1.12, xref: 'paper', yref: 'paper',
+     showarrow: false, font: {size: 12, color: fontColor}},
+    {text: '<b>Πού πάει η ισχύς</b>', x: 0.83, y: 1.12, xref: 'paper', yref: 'paper',
+     showarrow: false, font: {size: 12, color: fontColor}},
+  ],
+  showlegend: true,
+  legend: {orientation: 'h', y: -0.2, font: {size: 10, color: fontColor}},
+  margin: {t: 40, b: 60, l: 55, r: 10},
+  height: 290,
+  paper_bgcolor: 'rgba(0,0,0,0)',
+  plot_bgcolor:  'rgba(0,0,0,0)',
+  font: {color: fontColor},
+};
+
+Plotly.newPlot(gd, data, layout, {responsive: true, displayModeBar: false});
+{{< /plotly >}}
+
+Δεξιά φαίνεται καθαρά το πρόβλημα του DSB-AM-TC: ακόμα και στην οριακή $\mu=1$ το **πορτοκαλί** (φέρον) είναι τα $2/3$ — ισχύς που εκπέμπεις χωρίς να μεταφέρεις πληροφορία. Για μικρά $\mu$ η σπατάλη είναι σχεδόν ολική (στο $\mu=0.3$ μόνο ~4% είναι χρήσιμο). Γι' αυτό το DSB-SC, που πετάει το φέρον, είναι πιο αποδοτικό.
+
 ---
 
 #### DSB-AM-SC (ΑΜ χωρίς φέρον)
@@ -359,6 +415,58 @@ $$P_k = \frac{A_c^2}{2}J_k^2(\beta)$$
 $$P_{FM} = \frac{A_c^2}{2}\sum_{k=-\infty}^{+\infty}J_k^2(\beta) = \frac{A_c^2}{2}$$
 
 Η άθροιση ισούται πάντα με 1 — επιβεβαιώνει ότι η ισχύς δεν αλλάζει με το $\beta$.
+
+{{< plotly >}}
+var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+var fontColor = dark ? '#e8e8ed' : '#1c1c1e';
+var zeroColor = dark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)';
+var gridColor = dark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)';
+
+// J_n(x) μέσω ολοκληρώματος: (1/π)∫_0^π cos(nθ − x sinθ) dθ  (Simpson)
+function besselJ(n, x) {
+  var N = 240, s = 0, h = Math.PI / N;
+  for (var i = 0; i <= N; i++) {
+    var th = i * h, f = Math.cos(n * th - x * Math.sin(th));
+    s += (i === 0 || i === N) ? f : (i % 2 ? 4 * f : 2 * f);
+  }
+  return (h / 3) * s / Math.PI;
+}
+
+var xs = [];
+for (var i = 0; i <= 200; i++) xs.push(10 * i / 200);
+
+var colors = ['#3b82f6', '#22c55e', '#f97316', '#a855f7'];
+var data = [];
+for (var n = 0; n <= 3; n++) {
+  data.push({x: xs, y: xs.map(function (x) { return besselJ(n, x); }),
+    type: 'scatter', mode: 'lines', name: 'J' + n + '(β)',
+    line: {color: colors[n], width: 2}, hoverinfo: 'skip'});
+}
+
+var layout = {
+  xaxis: {title: {text: 'δείκτης διαμόρφωσης β', font: {color: fontColor}},
+          range: [0, 10], dtick: 1, showgrid: true, gridcolor: gridColor,
+          zeroline: false, color: fontColor},
+  yaxis: {title: {text: 'J_n(β)', font: {color: fontColor}}, range: [-0.5, 1.05],
+          showgrid: true, gridcolor: gridColor, zeroline: true,
+          zerolinecolor: zeroColor, color: fontColor},
+  annotations: [
+    {text: 'J₀=0 στο β≈2.405<br>(μηδενισμός φέροντος)', x: 2.405, y: 0, ax: 55, ay: -45,
+     showarrow: true, arrowhead: 2, arrowcolor: '#3b82f6', font: {size: 9, color: '#3b82f6'}},
+  ],
+  showlegend: true,
+  legend: {orientation: 'h', y: -0.22, font: {size: 10, color: fontColor}},
+  margin: {t: 20, b: 55, l: 50, r: 15},
+  height: 280,
+  paper_bgcolor: 'rgba(0,0,0,0)',
+  plot_bgcolor:  'rgba(0,0,0,0)',
+  font: {color: fontColor},
+};
+
+Plotly.newPlot(gd, data, layout, {responsive: true, displayModeBar: false});
+{{< /plotly >}}
+
+Πώς διαβάζεται: για δοθέν $\beta$ (κάθετη νοητή γραμμή), το ύψος κάθε καμπύλης δίνει το πλάτος της αντίστοιχης αρμονικής. Όσο μεγαλώνει το $\beta$, η ισχύς «φεύγει» από το φέρον ($J_0$, μπλε) προς τις πλευρικές — και σε κάποια $\beta$ (π.χ. $2.405$) το **φέρον μηδενίζεται τελείως**. Παρατήρησε ότι κάθε $J_n$ ξεκινά να γίνεται σημαντικό περίπου όταν $\beta \gtrsim n$ — εξ ου και ο εμπειρικός κανόνας «$N \approx \beta+1$ σημαντικές αρμονικές».
 
 ---
 
@@ -703,10 +811,83 @@ $$\boxed{\beta = \frac{\Delta f}{f_m} = \frac{k_f\,A_m}{f_m}}$$
 
 Συγκρίνει δύο πράγματα: **πόσο μακριά** πάει η συχνότητα ($\Delta f$) σε σχέση με **πόσο γρήγορα** αλλάζει το μήνυμα ($f_m$). Είναι **καθαρός αριθμός** (χωρίς μονάδες).
 
-- $\beta \ll 1$ → **στενοζωνικό** (NBFM): η συχνότητα ζουλιέται λίγο, μοιάζει με AM.
-- $\beta \gg 1$ → **ευρυζωνικό**: ζουλιέται πολύ, πιάνει μεγάλο εύρος στο φάσμα, αλλά είναι πιο ανθεκτικό στον θόρυβο.
+**Τι *είναι* στ' αλήθεια το $\beta$;** Είναι η **μέγιστη απόκλιση φάσης**, σε ακτίνια. Δες γιατί: για ημιτονικό μήνυμα $m(t) = A_m\cos(2\pi f_m t)$, η επιπλέον φάση που μαζεύει το φέρον είναι το ολοκλήρωμα του μηνύματος:
+
+$$\varphi(t) = 2\pi k_f\!\int m(\tau)\,d\tau = \underbrace{\frac{k_f A_m}{f_m}}_{=\,\beta}\sin(2\pi f_m t) = \beta\sin(2\pi f_m t).$$
+
+Δηλαδή η φάση του φέροντος ταλαντώνεται ανάμεσα σε $-\beta$ και $+\beta$ ακτίνια. **Το $\beta$ είναι το «πλάτος» αυτής της ταλάντωσης φάσης.** Μικρό $\beta$ → η φάση κουνιέται ελάχιστα → το σήμα μοιάζει σχεδόν με καθαρό φέρον (στενοζωνικό). Μεγάλο $\beta$ → η φάση σαρώνει πολλά ακτίνια → το σήμα «απλώνεται» σε πολλές συχνότητες (ευρυζωνικό).
+
+**Δύο ισοδύναμοι τρόποι να το σκέφτεσαι:**
+
+| Οπτική | Τι μετράει | Τύπος |
+|--------|-----------|-------|
+| **Συχνότητα** | πόσο μακριά ζουλιέται η συχνότητα, σε «μονάδες $f_m$» | $\beta = \Delta f / f_m$ |
+| **Φάση** | μέγιστη απόκλιση φάσης (rad) | $\varphi_{\max} = \beta$ |
+
+{{< plotly >}}
+var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+var fontColor = dark ? '#e8e8ed' : '#1c1c1e';
+var zeroColor = dark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)';
+
+var fc = 12, fm = 1;                 // 12 περίοδοι φέροντος ανά περίοδο μηνύματος
+var t = [];
+for (var i = 0; i <= 1000; i++) t.push(i / 1000);   // μία περίοδος μηνύματος
+
+function fmWave(beta) {
+  return t.map(function (ti) {
+    return Math.cos(2 * Math.PI * fc * ti + beta * Math.sin(2 * Math.PI * fm * ti));
+  });
+}
+var msg = t.map(function (ti) { return Math.cos(2 * Math.PI * fm * ti); });
+
+var data = [
+  // μήνυμα-οδηγός (αχνό) πάνω σε κάθε πάνελ
+  {x: t, y: msg, xaxis: 'x',  yaxis: 'y',  type: 'scatter', mode: 'lines',
+   line: {color: zeroColor, width: 1.5, dash: 'dot'}, showlegend: false, hoverinfo: 'skip'},
+  {x: t, y: msg, xaxis: 'x2', yaxis: 'y2', type: 'scatter', mode: 'lines',
+   line: {color: zeroColor, width: 1.5, dash: 'dot'}, showlegend: false, hoverinfo: 'skip'},
+  // FM κυματομορφές
+  {x: t, y: fmWave(0.5), xaxis: 'x',  yaxis: 'y',  type: 'scatter', mode: 'lines',
+   line: {color: '#3b82f6', width: 1.3}, showlegend: false, hoverinfo: 'skip'},
+  {x: t, y: fmWave(5),   xaxis: 'x2', yaxis: 'y2', type: 'scatter', mode: 'lines',
+   line: {color: '#f97316', width: 1.3}, showlegend: false, hoverinfo: 'skip'},
+];
+
+var ax = {showticklabels: false, showgrid: false, zeroline: false, range: [0, 1], color: fontColor};
+var ay = {showticklabels: false, showgrid: false, zeroline: true, zerolinecolor: zeroColor, range: [-1.3, 1.3]};
+
+var layout = {
+  grid: {rows: 2, columns: 1, pattern: 'independent'},
+  xaxis:  Object.assign({}, ax),
+  yaxis:  Object.assign({anchor: 'x'}, ay),
+  xaxis2: Object.assign({title: {text: 'μία περίοδος μηνύματος →', font: {size: 11, color: fontColor}}}, ax),
+  yaxis2: Object.assign({anchor: 'x2'}, ay),
+  annotations: [
+    {text: '<b>β = 0.5</b> — στενοζωνικό: η συχνότητα μετά βίας αλλάζει',
+     xref: 'paper', yref: 'paper', x: 0, y: 1.06, showarrow: false,
+     font: {size: 11, color: '#3b82f6'}},
+    {text: '<b>β = 5</b> — ευρυζωνικό: πυκνώνει στις κορυφές, αραιώνει στις κοιλάδες',
+     xref: 'paper', yref: 'paper', x: 0, y: 0.46, showarrow: false,
+     font: {size: 11, color: '#f97316'}},
+  ],
+  margin: {t: 30, b: 40, l: 10, r: 10},
+  height: 320,
+  paper_bgcolor: 'rgba(0,0,0,0)',
+  plot_bgcolor:  'rgba(0,0,0,0)',
+  font: {color: fontColor},
+};
+
+Plotly.newPlot(gd, data, layout, {responsive: true, displayModeBar: false});
+{{< /plotly >}}
+
+Και τα δύο σήματα έχουν την **ίδια** $f_m$ (ίδιο μήνυμα-οδηγός, η διακεκομμένη). Η μόνη διαφορά είναι το $\beta$: στο $\beta=5$ η στιγμιαία συχνότητα σαρώνει πολύ μεγαλύτερο εύρος — βλέπεις την κυματομορφή να **πυκνώνει** όπου το μήνυμα είναι ψηλά (μεγάλη $f_i$) και να **αραιώνει** όπου είναι χαμηλά. Στο $\beta=0.5$ η πύκνωση μόλις που φαίνεται. *Όσο μεγαλύτερο το $\beta$, τόσο πιο έντονο το «ζούληγμα» της συχνότητας — και τόσο πιο πλατύ το φάσμα.*
+
+- $\beta \ll 1$ → **στενοζωνικό** (NBFM): η συχνότητα ζουλιέται λίγο, μοιάζει με AM, εύρος $B \approx 2f_m$.
+- $\beta \gg 1$ → **ευρυζωνικό**: ζουλιέται πολύ, πιάνει μεγάλο εύρος στο φάσμα ($B \approx 2\Delta f$), αλλά είναι πιο ανθεκτικό στον θόρυβο.
 
 > **Παγίδα εξετάσεων:** αν το $f_m$ **μικρύνει** (αργό μήνυμα) με ίδιο πλάτος, ο $\beta$ **μεγαλώνει** (το $f_m$ είναι στον παρονομαστή). Αργά σήματα → μεγαλύτερο $\beta$.
+
+> **Προσοχή στο PM:** στο PM ο δείκτης είναι $\beta_{PM} = k_p A_m$ — δεν διαιρείς με $f_m$ (η φάση ακολουθεί απευθείας το $m(t)$, όχι το ολοκλήρωμά του). Γι' αυτό στο PM ο $\beta$ δεν αλλάζει με την ταχύτητα του μηνύματος, ενώ στο FM αλλάζει.
 
 #### Ενεργό εύρος ζώνης — πόσο χώρο πιάνει στο φάσμα (Κανόνας Carson)
 
@@ -975,6 +1156,41 @@ $$(\mathrm{SNR})_q = \frac{\sigma_x^2}{\sigma_q^2} = \frac{12\sigma_x^2}{\Delta^
 **Σε dB:** $10\log_{10}(2^{2R}) = 20R\log_{10}2 \approx 6.02R\,\mathrm{dB}$
 
 Κάθε επιπλέον bit προσθέτει ~$6\,\mathrm{dB}$.
+
+{{< plotly >}}
+var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+var fontColor = dark ? '#e8e8ed' : '#1c1c1e';
+var zeroColor = dark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)';
+var gridColor = dark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)';
+
+var R = [], snr = [];
+for (var r = 1; r <= 12; r++) { R.push(r); snr.push(6.02 * r); }
+
+var data = [{
+  x: R, y: snr, type: 'bar', marker: {color: 'rgba(59,130,246,0.85)'},
+  text: snr.map(function (s) { return s.toFixed(0); }), textposition: 'outside',
+  textfont: {size: 9, color: fontColor}, hoverinfo: 'skip', showlegend: false,
+}];
+
+var layout = {
+  xaxis: {title: {text: 'bits R', font: {color: fontColor}}, dtick: 1,
+          showgrid: false, zeroline: false, color: fontColor},
+  yaxis: {title: {text: '(SNR)_q (dB)', font: {color: fontColor}}, range: [0, 85],
+          showgrid: true, gridcolor: gridColor, zeroline: true,
+          zerolinecolor: zeroColor, color: fontColor},
+  annotations: [{text: 'κάθε bit: +6.02 dB', x: 3.5, y: 72, showarrow: false,
+                 font: {size: 11, color: fontColor}}],
+  margin: {t: 20, b: 50, l: 55, r: 10},
+  height: 260,
+  paper_bgcolor: 'rgba(0,0,0,0)',
+  plot_bgcolor:  'rgba(0,0,0,0)',
+  font: {color: fontColor},
+};
+
+Plotly.newPlot(gd, data, layout, {responsive: true, displayModeBar: false});
+{{< /plotly >}}
+
+Η σχέση είναι **γραμμική**: ο λόγος SNR (σε dB) ανεβαίνει κατά σταθερό βήμα $\approx 6\,\mathrm{dB}$ για κάθε επιπλέον bit. Διπλασιάζοντας τα επίπεδα κβάντισης ($R\to R+1$, $L\to 2L$) υποτετραπλασιάζεις την ισχύ θορύβου ($\sigma_q^2 = \Delta^2/12$, με $\Delta$ υποδιπλάσιο → $\Delta^2$ στο $1/4$).
 
 **Βρέτε $\sigma_x^2$ από PDF:**
 
