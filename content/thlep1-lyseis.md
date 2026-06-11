@@ -770,11 +770,43 @@ $$B' = 2 \times 10000 \times (4+1) = 100\,\mathrm{kHz}$$
 
 ### Θέμα 3
 
-<p class="exercise-tags"><span class="tag">Κβάντιση</span><span class="tag">SNR Κβάντισης</span><span class="tag">Ομοιόμορφος Κβαντιστής</span></p>
+<p class="exercise-tags"><span class="tag">Κβάντιση</span><span class="tag">SNR Κβάντισης</span><span class="tag">Τραπεζοειδής PDF</span></p>
 
 #### Εκφώνηση
 
-Σήμα $x(t)$ με τραπεζοειδή PDF (Σχήμα 3), $\Pr\{x(t) \leq 1\} = 0.5$. Ομοιόμορφος κβαντιστής, $R = 3$ bits. $\sigma_q^2 = \Delta^2/12$.
+Ένα σήμα πληροφορίας $x(t)$ μοντελοποιείται ως δείγμα μιας τυχαίας διαδικασίας με συνάρτηση πυκνότητας πιθανότητας (ΣΠΠ) που δίνεται στο Σχήμα 3 και για την οποία ισχύει $\Pr\{x(t) \leq 1\} = 0.5$. Το σήμα εισάγεται σε ομοιόμορφο κβαντιστή, ο οποίος καλύπτει όλο το εύρος τιμών του σήματος. Ο αριθμός των bits είναι $R = 3$. (Θεωρήστε ότι η διακύμανση του θορύβου δίνεται ως $\sigma_q^2 = \Delta^2/12$, όπου $\Delta$ το βήμα κβάντισης.)
+
+**Σχήμα 3** — τραπεζοειδής ΣΠΠ $f_x(x)$, συμμετρική ως προς $x = a/2$: γραμμική άνοδος από $0$ (στο $x=0$) ως $\beta$ (στο $x=a/4$), σταθερή τιμή $\beta$ στο $[a/4, 3a/4]$, γραμμική κάθοδος από $\beta$ ως $0$ (στο $x=a$), μηδέν εκτός $[0, a]$.
+
+{{< plotly >}}
+var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+var fontColor = dark ? '#e8e8ed' : '#1c1c1e';
+var zeroColor = dark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)';
+
+var b = 2/3;
+var data = [
+  {x: [0, 0.5, 1.5, 2], y: [0, b, b, 0], type: 'scatter', mode: 'lines',
+   line: {color: '#3b82f6', width: 2.5}, fill: 'tozeroy',
+   fillcolor: 'rgba(59,130,246,0.12)', showlegend: false, hoverinfo: 'skip'},
+];
+
+var layout = {
+  xaxis: {title: {text: 'x', font: {color: fontColor}}, range: [-0.4, 2.4],
+          zeroline: true, zerolinecolor: zeroColor, showgrid: false,
+          tickvals: [0, 0.5, 1, 1.5, 2], ticktext: ['0', 'a/4', 'a/2', '3a/4', 'a'],
+          color: fontColor},
+  yaxis: {title: {text: 'f_x(x)', font: {color: fontColor}}, range: [0, 0.85],
+          zeroline: true, zerolinecolor: zeroColor, showgrid: false,
+          tickvals: [b], ticktext: ['β'], color: fontColor},
+  margin: {t: 20, b: 45, l: 45, r: 10},
+  height: 240,
+  paper_bgcolor: 'rgba(0,0,0,0)',
+  plot_bgcolor:  'rgba(0,0,0,0)',
+  font: {color: fontColor},
+};
+
+Plotly.newPlot(gd, data, layout, {responsive: true, displayModeBar: false});
+{{< /plotly >}}
 
 **α-10)** Βρείτε $a$, $\beta$.
 
@@ -788,34 +820,30 @@ $$B' = 2 \times 10000 \times (4+1) = 100\,\mathrm{kHz}$$
 
 ##### Μέρος α
 
-Η τραπεζοειδής PDF (από Σχήμα 3) είναι συμμετρική γύρω από $x = a/2$ με:
-- Γραμμικά τμήματα από $0$ ως $a/4$ (άνοδος) και από $3a/4$ ως $a$ (κάθοδος)
-- Σταθερό τμήμα ύψους $\beta$ από $a/4$ ως $3a/4$
+Η τραπεζοειδής ΣΠΠ είναι συμμετρική γύρω από $x = a/2$: βάση $[0, a]$, οροφή (σταθερό τμήμα) $[a/4, 3a/4]$ ύψους $\beta$.
 
-Κανονικοποίηση (εμβαδόν τραπεζίου):
+**Κανονικοποίηση** (εμβαδόν τραπεζίου = 1): μεγάλη βάση $= a$, μικρή βάση $= 3a/4 - a/4 = a/2$:
 
-$$\beta \cdot \frac{a}{2} + 2 \cdot \frac{1}{2} \cdot \frac{a}{4} \cdot \beta = 1 \implies \frac{a\beta}{2} + \frac{a\beta}{4} = 1 \implies \frac{3a\beta}{4} = 1$$
+$$\frac{a + a/2}{2}\cdot\beta = \frac{3a}{4}\beta = 1$$
 
-Μέση τιμή = $a/2$ (λόγω συμμετρίας). Ο διάμεσος $= a/2 = 1 \implies \boxed{a = 2}$.
+**Διάμεσος:** $\Pr\{x \leq 1\} = 0.5$ και λόγω συμμετρίας ο διάμεσος είναι το κέντρο $a/2$, άρα $a/2 = 1 \implies \boxed{a = 2}$. Τότε:
 
-$$\frac{3 \times 2 \times \beta}{4} = 1 \implies \boxed{\beta = \frac{2}{3}}$$
+$$\frac{3 \times 2}{4}\beta = 1 \implies \boxed{\beta = \frac{2}{3}}$$
 
 ##### Μέρος β
 
-Εύρος: $[0, a] = [0, 2]$, οπότε $\Delta = 2/2^3 = 0.25\,\mathrm{V}$.
+Εύρος κβαντιστή: $[0, a] = [0, 2]$, $V_{pp} = 2$, $R = 3$:
 
-Διακύμανση $\sigma_x^2$: λόγω συμμετρίας γύρω από $a/2 = 1$, υπολογίζω $E[(X-1)^2]$. Με $u = x - 1$, η PDF γίνεται συμμετρική ως προς $0$ από $-1$ ως $1$:
+$$\Delta = \frac{V_{pp}}{2^R} = \frac{2}{8} = 0.25\,\mathrm{V} \implies \sigma_q^2 = \frac{\Delta^2}{12} = \frac{1}{192}$$
 
-$$\sigma_x^2 = 2\int_0^{1/2} u^2 \cdot \beta\,du + 2\int_{1/2}^{1} u^2 \cdot \frac{2\beta(1-u)}{a/2 - (3a/4 - a)}\,du$$
+**Διακύμανση $\sigma_x^2$.** Το τραπέζιο είναι συμμετρικό γύρω από το κέντρο $a/2 = 1$ με εξωτερικό μισό-πλάτος $c = a/2 = 1$ (από το κέντρο ως την άκρη $0$ ή $2$) και εσωτερικό μισό-πλάτος $b = a/4 = 0.5$ (ως την άκρη της οροφής $0.5$ ή $1.5$). Με τον τύπο του συμμετρικού τραπεζίου:
 
-Για τo σταθερό τμήμα ($0 \leq |u| \leq 1/4$): $f_U(u) = 2/3$.
-Για το γραμμικό τμήμα ($1/4 \leq |u| \leq 1$): $f_U(u) = \frac{2}{3} \cdot \frac{1 - |u|}{3/4}$... 
+$$\sigma_x^2 = \frac{c^2 + b^2}{6} = \frac{1^2 + (1/2)^2}{6} = \frac{5/4}{6} = \frac{5}{24}$$
 
-Απλοποιημένη υπολογιστική διαδικασία: $(SNR)_q = 12\sigma_x^2/\Delta^2$.
+> Επαλήθευση με ολοκλήρωση (μετατόπιση $u = x-1$, $f_U(u) = \frac23$ για $|u|\le\frac12$ και $f_U(u)=\frac43(1-|u|)$ για $\frac12\le|u|\le1$):
+> $$\sigma_x^2 = 2\!\left[\int_0^{1/2}\! u^2\tfrac23\,du + \int_{1/2}^{1}\! u^2\tfrac43(1-u)\,du\right] = 2\!\left[\tfrac{1}{36} + \tfrac{11}{144}\right] = \tfrac{5}{24}\ \checkmark$$
 
-Για τυπική τραπεζοειδή κατανομή: $\sigma_x^2 \approx 1/6$ (τυπική τιμή για τέτοιες κατανομές).
-
-$$(\mathrm{SNR})_q = \frac{12 \times 1/6}{(0.25)^2} = \frac{2}{1/16} = 32 \approx \boxed{15.1\,\mathrm{dB}}$$
+$$(\mathrm{SNR})_q = \frac{12\sigma_x^2}{\Delta^2} = \frac{12 \times 5/24}{(1/4)^2} = \frac{5/2}{1/16} = 40 \implies \boxed{10\log_{10}(40) \approx 16.02\,\mathrm{dB}}$$
 
 ##### Μέρος γ
 
@@ -1012,6 +1040,207 @@ $$|q|_{max} = \frac{\Delta}{2} = \frac{0.25}{2} = \boxed{0.125\,\mathrm{V}}$$
 Για ελάχιστο μέγιστο σφάλμα κβάντισης: ο κβαντιστής καλύπτει ακριβώς το $[a/2, 3a/2] = [0.5, 1.5]$ (χωρίς «νεκρή ζώνη»). Με $R = 2$ bits και $L = 4$ επίπεδα, το βήμα $\Delta = 1/4$ δίνει ήδη ελάχιστο μέγιστο σφάλμα $\Delta/2 = 0.125\,\mathrm{V}$.
 
 **Παραλλαγή:** Χρησιμοποίησε **μη-ομοιόμορφο** κβαντιστή με πιο πυκνά επίπεδα γύρω από την κορυφή ($x = 1$) όπου η PDF είναι μεγάλη. Αυτό μειώνει το μέσο τετραγωνικό σφάλμα αλλά όχι το μέγιστο. Για ελάχιστο **μέγιστο** σφάλμα, ο ομοιόμορφος κβαντιστής είναι βέλτιστος.
+
+---
+
+## Σεπτέμβριος 2023
+
+### Θέμα 4
+
+<p class="exercise-tags"><span class="tag">Κβάντιση</span><span class="tag">SNR Κβάντισης</span><span class="tag">Τραπεζοειδής PDF</span></p>
+
+#### Εκφώνηση
+
+Ένα σήμα πληροφορίας $x(t)$ μοντελοποιείται σαν δείγμα μιας τυχαίας διαδικασίας με συνάρτηση πυκνότητας πιθανότητας που δίνεται στο Σχήμα 2. Το σήμα εισάγεται σε ομοιόμορφο κβαντιστή τύπου mid-rise, ο οποίος καλύπτει όλο το εύρος τιμών του σήματος. Η έξοδος του κβαντιστή είναι κωδικολέξη αποτελούμενη από $R = 2$ bits. Θεωρείται ότι το σφάλμα κβάντισης είναι ομοιόμορφα κατανεμημένο στο διάστημα $\left[-\frac{\Delta}{2}, \frac{\Delta}{2}\right]$, όπου $\Delta$ είναι το βήμα κβάντισης.
+
+**Σχήμα 2** — τραπεζοειδής PDF $f_x(x)$, συμμετρική ως προς το $0$: σταθερή τιμή $\alpha$ στο $[-2, 2]$, γραμμική κάθοδος από $\alpha$ (στο $\pm 2$) ως $0$ (στο $\pm 4$), μηδέν εκτός $[-4, 4]$.
+
+{{< plotly >}}
+var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+var fontColor = dark ? '#e8e8ed' : '#1c1c1e';
+var zeroColor = dark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)';
+
+var a = 1/6;
+var data = [
+  {x: [-4, -2, 2, 4], y: [0, a, a, 0], type: 'scatter', mode: 'lines',
+   line: {color: '#3b82f6', width: 2.5}, fill: 'tozeroy',
+   fillcolor: 'rgba(59,130,246,0.12)', showlegend: false, hoverinfo: 'skip'},
+];
+
+var layout = {
+  xaxis: {title: {text: 'x', font: {color: fontColor}}, range: [-5, 5],
+          zeroline: true, zerolinecolor: zeroColor, showgrid: false,
+          tickvals: [-4, -2, 0, 2, 4], color: fontColor},
+  yaxis: {title: {text: 'f_x(x)', font: {color: fontColor}}, range: [0, 0.22],
+          zeroline: true, zerolinecolor: zeroColor, showgrid: false,
+          tickvals: [a], ticktext: ['α'], color: fontColor},
+  margin: {t: 20, b: 45, l: 45, r: 10},
+  height: 240,
+  paper_bgcolor: 'rgba(0,0,0,0)',
+  plot_bgcolor:  'rgba(0,0,0,0)',
+  font: {color: fontColor},
+};
+
+Plotly.newPlot(gd, data, layout, {responsive: true, displayModeBar: false});
+{{< /plotly >}}
+
+**α-10)** Να βρεθεί η τιμή της παραμέτρου $\alpha$.
+
+**β-10)** Να υπολογισθεί η σηματοθορυβική σχέση κβάντισης.
+
+**γ-7)** Να βρεθεί η πιθανότητα κάποιο λαμβανόμενο δείγμα να πέσει σε ένα από τα δύο εξωτερικά επίπεδα κβάντισης.
+
+**δ-8)** Το κανάλι μετάδοσης έχει χωρητικότητα $21\,\mathrm{Mbps}$ και η συχνότητα δειγματοληψίας ισούται με $4\cdot10^6\,\mathrm{samples/sec}$. Χρησιμοποιείται ένας νέος κβαντιστής με κωδικολέξη αποτελούμενη από $R'$ bits, ώστε να αξιοποιείται πλήρως το κανάλι μετάδοσης. Υπολογίστε την αύξηση της σηματοθορυβικής σχέσης κβάντισης σε dB, που προκύπτει από τη χρήση του νέου κβαντιστή σε σχέση με τον κβαντιστή της εκφώνησης.
+
+#### Λύση
+
+> **Σηματοθορυβική σχέση κβάντισης** $(\mathrm{SNR})_q$ = λόγος ισχύος σήματος προς ισχύ θορύβου κβάντισης: $(\mathrm{SNR})_q = \dfrac{\sigma_x^2}{\sigma_q^2} = \dfrac{12\sigma_x^2}{\Delta^2}$, με $\sigma_q^2 = \Delta^2/12$.
+
+##### Μέρος α
+
+Η PDF είναι **τραπέζιο**: μεγάλη βάση $[-4,4]$ (πλάτος $8$), μικρή βάση $[-2,2]$ (πλάτος $4$), ύψος $\alpha$. Το εμβαδόν ισούται με $1$:
+
+$$\text{Εμβαδόν} = \frac{(\text{μεγάλη} + \text{μικρή βάση})}{2}\cdot\alpha = \frac{8+4}{2}\cdot\alpha = 6\alpha = 1 \implies \boxed{\alpha = \frac{1}{6}}$$
+
+##### Μέρος β
+
+Ο κβαντιστής καλύπτει όλο το εύρος $[-4,4]$, άρα $V_{pp} = 8$. Με $R = 2$, $L = 2^2 = 4$ επίπεδα:
+
+$$\Delta = \frac{V_{pp}}{2^R} = \frac{8}{4} = 2 \implies \sigma_q^2 = \frac{\Delta^2}{12} = \frac{4}{12} = \frac{1}{3}$$
+
+**Διακύμανση σήματος** $\sigma_x^2$ (συμμετρική γύρω από $0 \Rightarrow \mu_x=0$, άρα $\sigma_x^2 = E[X^2]$). Με $f_x(x) = \frac16$ στο $[0,2]$ και $f_x(x) = \frac{4-x}{12}$ στο $[2,4]$:
+
+$$\sigma_x^2 = 2\!\left[\int_0^2 x^2\cdot\frac16\,dx + \int_2^4 x^2\cdot\frac{4-x}{12}\,dx\right] = 2\!\left[\frac49 + \frac{11}{9}\right] = 2\cdot\frac{15}{9} = \frac{10}{3}$$
+
+> **Γρήγορος τύπος** (συμμετρικό τραπέζιο, εξωτερικό μισό-πλάτος $c=4$, εσωτερικό $b=2$): $\sigma_x^2 = \dfrac{c^2+b^2}{6} = \dfrac{16+4}{6} = \dfrac{10}{3}$ ✓
+
+$$(\mathrm{SNR})_q = \frac{\sigma_x^2}{\sigma_q^2} = \frac{10/3}{1/3} = 10 \implies \boxed{10\log_{10}(10) = 10\,\mathrm{dB}}$$
+
+##### Μέρος γ
+
+Mid-rise, $L=4$ επίπεδα στο $[-4,4]$ με $\Delta=2$: διαστήματα απόφασης $[-4,-2], [-2,0], [0,2], [2,4]$, επίπεδα $-3, -1, +1, +3$. Τα **δύο εξωτερικά** επίπεδα ($\pm3$) αντιστοιχούν στα διαστήματα $[-4,-2]$ και $[2,4]$ — ακριβώς τα τριγωνικά «πλαϊνά» του τραπεζίου.
+
+$$\Pr\{2 \leq X \leq 4\} = \frac12\cdot\text{βάση}\cdot\text{ύψος} = \frac12\cdot2\cdot\frac16 = \frac16$$
+
+Λόγω συμμετρίας, ίδια πιθανότητα και για το $[-4,-2]$:
+
+$$\Pr\{\text{εξωτερικά}\} = 2\cdot\frac16 = \boxed{\frac13}$$
+
+##### Μέρος δ
+
+**Ρυθμός bit** = (bits ανά δείγμα) × (δείγματα ανά sec) = $R'\cdot f_s$. Για πλήρη αξιοποίηση χωρίς υπέρβαση του καναλιού:
+
+$$R'\cdot 4\cdot10^6 \leq 21\cdot10^6 \implies R' \leq \frac{21}{4} = 5.25 \implies R' = 5\ \text{bits}$$
+
+($R'=6$ θα έδινε $24\,\mathrm{Mbps} > 21$, υπέρβαση.)
+
+**Αύξηση SNR:** κάθε επιπλέον bit δίνει $+6.02\,\mathrm{dB}$ **ανεξάρτητα από την κατανομή** (το $\sigma_x^2$ μένει σταθερό, μόνο το $\Delta$ υποδιπλασιάζεται):
+
+$$\Delta(\mathrm{SNR})_{dB} = 6.02\cdot(R'-R) = 6.02\cdot(5-2) = \boxed{18.06\,\mathrm{dB}}$$
+
+---
+
+## Ιανουάριος 2023
+
+### Θέμα 4
+
+<p class="exercise-tags"><span class="tag">Κβάντιση</span><span class="tag">SNR Κβάντισης</span><span class="tag">Σφάλμα Κβάντισης</span></p>
+
+#### Εκφώνηση
+
+Δίνεται σήμα πληροφορίας, του οποίου τα δείγματα ακολουθούν ομοιόμορφη κατανομή στο διάστημα $\left[-\frac{a}{2}, \frac{a}{2}\right]$. Το σήμα εισάγεται σε έναν ομοιόμορφο κβαντιστή, του οποίου η έξοδος είναι κωδικολέξη αποτελούμενη από $R$ bits. Θεωρήστε ότι το σφάλμα κβάντισης είναι ομοιόμορφα κατανεμημένο στο διάστημα $\left[-\frac{\Delta}{2}, \frac{\Delta}{2}\right]$, όπου $\Delta$ το βήμα κβάντισης.
+
+**α-10)** Αποδείξτε ότι η σηματοθορυβική σχέση κβάντισης ισούται με $2^{2R}$.
+
+**β-10)** Το σήμα πληροφορίας εισάγεται σε έναν νέο ομοιόμορφο κβαντιστή, του οποίου η έξοδος είναι κωδικολέξη αποτελούμενη από $R'$ bits. Απαιτείται η σηματοθορυβική σχέση κβάντισης για τον νέο κβαντιστή να είναι τουλάχιστον κατά $15\,\mathrm{dB}$ αυξημένη από αυτήν του κβαντιστή στο ερώτημα α). Υπολογίστε τον αριθμό των επιπλέον bits που θα πρέπει να περιέχει η κωδικολέξη του νέου κβαντιστή, σε σχέση με την κωδικολέξη του κβαντιστή στο ερώτημα α).
+
+**γ-10)** Το σήμα $x(t)$ του Σχήματος 2, εισάγεται σε έναν ομοιόμορφο κβαντιστή τύπου mid-rise, του οποίου η έξοδος αποτελείται από $L$ επίπεδα κβάντισης. Για το διάστημα $t \in [0, 1]$, προσδιορίστε όλες τις χρονικές στιγμές, ως συνάρτηση του $L$, για τις οποίες το απόλυτο σφάλμα κβάντισης ισούται με $0.1\Delta$.
+
+**Σχήμα 2** — πριονωτό $x(t)$: στο $[0,1]$ ανέρχεται γραμμικά από $0$ στο $1$ (κλίση $1$), στο $t=1$ πέφτει απότομα στο $-1$, και στο $[1,2]$ ανέρχεται γραμμικά από $-1$ στο $0$. Το σήμα κινείται στο $[-1, 1]$.
+
+{{< plotly >}}
+var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+var fontColor = dark ? '#e8e8ed' : '#1c1c1e';
+var zeroColor = dark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)';
+
+var data = [
+  {x: [0, 1], y: [0, 1], type: 'scatter', mode: 'lines',
+   line: {color: '#3b82f6', width: 2.5}, showlegend: false, hoverinfo: 'skip'},
+  {x: [1, 2], y: [-1, 0], type: 'scatter', mode: 'lines',
+   line: {color: '#3b82f6', width: 2.5}, showlegend: false, hoverinfo: 'skip'},
+  {x: [1, 1], y: [1, -1], type: 'scatter', mode: 'lines',
+   line: {color: '#3b82f6', width: 2.5, dash: 'dot'}, showlegend: false, hoverinfo: 'skip'},
+];
+
+var layout = {
+  xaxis: {title: {text: 't', font: {color: fontColor}}, range: [-0.1, 2.2],
+          zeroline: true, zerolinecolor: zeroColor, showgrid: false,
+          dtick: 1, color: fontColor},
+  yaxis: {title: {text: 'x(t)', font: {color: fontColor}}, range: [-1.3, 1.3],
+          zeroline: true, zerolinecolor: zeroColor, showgrid: false,
+          dtick: 1, color: fontColor},
+  margin: {t: 20, b: 45, l: 45, r: 10},
+  height: 250,
+  paper_bgcolor: 'rgba(0,0,0,0)',
+  plot_bgcolor:  'rgba(0,0,0,0)',
+  font: {color: fontColor},
+};
+
+Plotly.newPlot(gd, data, layout, {responsive: true, displayModeBar: false});
+{{< /plotly >}}
+
+#### Λύση
+
+##### Μέρος α
+
+Ομοιόμορφη κατανομή στο $\left[-\frac{a}{2}, \frac{a}{2}\right]$ (πλάτος $a$): $f_X(x) = \dfrac{1}{a}$.
+
+$$\sigma_x^2 = \int_{-a/2}^{a/2} x^2 \cdot \frac{1}{a}\,dx = \frac{1}{a}\cdot\frac{2}{3}\left(\frac{a}{2}\right)^3 = \frac{1}{a}\cdot\frac{a^3}{12} = \frac{a^2}{12}$$
+
+Ο κβαντιστής καλύπτει το εύρος $a$ με $L = 2^R$ επίπεδα:
+
+$$\Delta = \frac{a}{2^R} \implies \sigma_q^2 = \frac{\Delta^2}{12} = \frac{a^2}{12\cdot 2^{2R}}$$
+
+$$(\mathrm{SNR})_q = \frac{\sigma_x^2}{\sigma_q^2} = \frac{a^2/12}{a^2/(12\cdot 2^{2R})} = \boxed{2^{2R}}$$
+
+##### Μέρος β
+
+Απαιτείται $(\mathrm{SNR})'_q \geq 10^{15/10}\times(\mathrm{SNR})_q = 10^{1.5}\times 2^{2R}$. Για τον νέο κβαντιστή $(\mathrm{SNR})'_q = 2^{2R'}$:
+
+$$2^{2R'} \geq 10^{1.5}\cdot 2^{2R} \implies 2^{2(R'-R)} \geq 10^{1.5} \implies 2(R'-R)\log_{10}2 \geq 1.5$$
+
+$$R' - R \geq \frac{1.5}{2\times 0.301} = \frac{1.5}{0.602} = 2.49$$
+
+Στρογγυλοποίηση προς τα πάνω (ακέραιος αριθμός bits):
+
+$$\boxed{R' - R = 3 \text{ επιπλέον bits}}$$
+
+Επαλήθευση: $3$ bits δίνουν αύξηση $3\times 6.02 = 18.06\,\mathrm{dB} \geq 15\,\mathrm{dB}$ ✓, ενώ $2$ bits μόνο $12.04\,\mathrm{dB} < 15$ ✗.
+
+##### Μέρος γ
+
+Στο $[0,1]$ το σήμα είναι ράμπα κλίσης $1$: $x(t) = t$, με $x \in [0,1]$.
+
+**Κβαντιστής:** mid-rise στο $[-1,1]$ (εύρος $2$) με $L$ επίπεδα, άρα $\Delta = \dfrac{2}{L}$. Όρια απόφασης στο $0, \pm\Delta, \pm2\Delta,\ldots$· επίπεδα αναπαράστασης στα μέσα των κελιών $\pm\frac{\Delta}{2}, \pm\frac{3\Delta}{2},\ldots$
+
+**Σφάλμα μέσα σε κάθε κελί.** Στο κελί $[k\Delta, (k+1)\Delta]$ (για $x\geq 0$) το επίπεδο αναπαράστασης είναι το μέσο $\left(k+\frac{1}{2}\right)\Delta$, οπότε το σφάλμα
+
+$$q(x) = \left(k+\tfrac{1}{2}\right)\Delta - x$$
+
+πέφτει **γραμμικά** από $+\frac{\Delta}{2}$ (στο $x=k\Delta$) στο $-\frac{\Delta}{2}$ (στο $x=(k+1)\Delta$). Είναι δηλαδή ένα πριονωτό σφάλμα. Θέτω $|q| = 0.1\Delta$:
+
+$$q = +0.1\Delta:\quad \left(k+\tfrac{1}{2}\right)\Delta - x = 0.1\Delta \implies x = (k+0.4)\Delta$$
+$$q = -0.1\Delta:\quad \left(k+\tfrac{1}{2}\right)\Delta - x = -0.1\Delta \implies x = (k+0.6)\Delta$$
+
+Εφόσον $x(t) = t$ και $\Delta = \dfrac{2}{L}$:
+
+$$\boxed{\,t = (k+0.4)\frac{2}{L} = \frac{2k+0.8}{L} \quad\text{και}\quad t = (k+0.6)\frac{2}{L} = \frac{2k+1.2}{L}\,}$$
+
+για $k = 0, 1, 2, \ldots, \dfrac{L}{2}-1$ (όσα κελιά χωράνε στο $x\in[0,1]$, δηλαδή $L/2$ κελιά).
+
+Σε κάθε κελί υπάρχουν **2 στιγμές** → συνολικά $2\cdot\dfrac{L}{2} = \boldsymbol{L}$ χρονικές στιγμές στο $[0,1]$.
+
+> Έλεγχος ορίου: για $k = L/2 - 1$ η μεγαλύτερη στιγμή είναι $t = \dfrac{L-0.8}{L} = 1 - \dfrac{0.8}{L} < 1$ ✓.
 
 ---
 

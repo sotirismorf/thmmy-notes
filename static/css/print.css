@@ -138,3 +138,59 @@ thead { display: table-header-group; }   /* repeat header if a table spans pages
 .js-plotly-plot .ylines-above path {
   stroke: rgba(0, 0, 0, 0.4) !important;
 }
+
+/* ---- Mermaid diagrams on paper ----
+   Mermaid bakes the theme palette into the SVG at render time. Printed from a
+   dark-themed browser, node fills stay dark and come out as solid black blocks
+   (SVG `fill` is foreground, so the browser does NOT drop it like a CSS bg).
+   Force a readable light palette via !important (beats Mermaid's inline styles). */
+.mermaid {
+  page-break-inside: avoid;
+  background: #fff !important;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* Node / cluster shapes → white fill, dark outline */
+.mermaid .node rect,
+.mermaid .node polygon,
+.mermaid .node circle,
+.mermaid .node ellipse,
+.mermaid .node path,
+.mermaid .cluster rect {
+  fill: #fff !important;
+  stroke: #333 !important;
+}
+
+/* All label text (SVG text + HTML foreignObject spans) → black */
+.mermaid text,
+.mermaid .nodeLabel,
+.mermaid .edgeLabel,
+.mermaid .label,
+.mermaid span,
+.mermaid div {
+  fill: #000 !important;
+  color: #000 !important;
+}
+
+/* Connecting lines */
+.mermaid .edgePath path,
+.mermaid .flowchart-link,
+.mermaid path.path {
+  stroke: #333 !important;
+  fill: none !important;
+}
+
+/* Arrowheads */
+.mermaid marker path {
+  fill: #333 !important;
+  stroke: #333 !important;
+}
+
+/* Edge-label backgrounds (the little box behind link text) → white, not dark */
+.mermaid .edgeLabel rect,
+.mermaid .edgeLabel .labelBkg,
+.mermaid .edgeLabel foreignObject div {
+  background: #fff !important;
+  fill: #fff !important;
+}
