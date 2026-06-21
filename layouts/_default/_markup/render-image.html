@@ -1,0 +1,6 @@
+{{- $u := .Destination -}}
+{{- if or (hasPrefix $u "http://") (hasPrefix $u "https://") (hasPrefix $u "//") (hasPrefix $u "data:") -}}
+<img src="{{ $u | safeURL }}" alt="{{ .Text }}"{{ with .Title }} title="{{ . }}"{{ end }} loading="lazy" style="max-width:100%;height:auto;" />
+{{- else -}}
+<img src="{{ $u | relURL }}" alt="{{ .Text }}"{{ with .Title }} title="{{ . }}"{{ end }} loading="lazy" style="max-width:100%;height:auto;" />
+{{- end -}}
